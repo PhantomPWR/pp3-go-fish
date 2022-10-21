@@ -9,10 +9,12 @@ def new_game():
     """
 
     # Clear screen
-    print(chr(27) + "[2J")
+    # print(chr(27) + "[2J")
+    print(chr(27) + "[2]")
     print("Go Fish!")
 
     print("Function running: new_game()")
+    game_rules()
 
 
 def game_rules():
@@ -20,6 +22,39 @@ def game_rules():
     - Game rules
     - Instructions on how to play
     """
+
+    rules = """
+The Pack
+--------
+- The game is played using a 52-card pack
+
+Object of the Game
+- The goal is to win the most books of cards
+- A book is 4 cards of equal rank, eg.
+    3\u2660 3\u2663 3\u2665 3\u2666, J\u2660 J\u2663 J\u2665 J\u2666, etc
+
+The Players
+-----------
+- In this version of Go Fish!, you are playing against the computer
+
+The Deal
+--------
+- Each player starts with 7 cards
+- The remaing cards are placed face down
+  on the table to form the stockpile
+    """
+
+    instructions = """
+1. You start
+    """
+
+    print("-" * 80)
+    print(rules)
+    print("-" * 80)
+
+    print("-" * 35)
+    print(instructions)
+    print("-" * 35)
 
     print("Function running: game_rules()")
 
@@ -46,7 +81,6 @@ def player_hand():
     """
 
     print("Function running: player_hand()")
-
 
 
 def player_books():
@@ -119,4 +153,6 @@ def main():
     switch_player()
     play_again()
 
-main()
+
+#main()
+new_game()
