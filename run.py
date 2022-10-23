@@ -1,29 +1,27 @@
+import os
+from time import sleep
 
 
-def new_game():
+def clear_screen():
     """
-    Display game rules & instructions
-    Reset # books
-    Deal hands
-    Set stockpile
+    Detect operating system and run relevant
+    clear screen command
     """
+    # Linux & OSX
+    if os.name == "posix":
+        os.system("clear")
 
-    # Clear screen
-    # print(chr(27) + "[2J")
-    print(chr(27) + "[2]")
-    print("Go Fish!")
-
-    print("Function running: new_game()")
-    game_rules()
+    # Windows
+    else:
+        os.system("cls")
 
 
 def game_rules():
     """
     - Game rules
-    - Instructions on how to play
     """
 
-    rules = """
+    rules_pt1 = """
 RULES OF THE GAME
 -----------------
 
@@ -47,6 +45,8 @@ The Deal
 - The remaing cards are placed face down
   on the table to form the stockpile
 
+    """
+    rules_pt2 = """
 Playing the Game
 ----------------
 1. You start by requesting a card from the computer
@@ -63,6 +63,19 @@ The game ends when either:
 - A player has an empty hand and there are no cards left in
   the stockpile
 
+    """
+    print("-" * 80)
+    print(rules_pt1)
+    input("┌────────────────────────────┐\n│ Press enter to continue... │\n└────────────────────────────┘")
+    sleep(0.5)
+    clear_screen()
+    print(rules_pt2)
+    print("=" * 80)
+
+
+def game_instructions():
+    """
+    - Game instructions
     """
 
     instructions = """
@@ -81,13 +94,31 @@ INSTRUCTIONS
    - "N" to exit the game
     """
 
-    print("-" * 80)
-    print(rules)
-    print("-" * 80)
     print(instructions)
     print("-" * 80)
 
-    print("Function running: game_rules()")
+
+def new_game():
+    """
+    - Display game rules & instructions
+    - Reset # books
+    - Deal hands
+    - Set stockpile
+    """
+
+    clear_screen()
+    sleep(0.5)
+    print("Go Fish!")
+    print("\u2588")
+    input("┌───────────────────────────────┐\n│ Press enter for game rules... │\n└───────────────────────────────┘")
+    print("Function running: new_game()")
+    sleep(0.5)
+    clear_screen()
+    game_rules()
+    game_instructions()
+
+
+
 
 
 def play_game():
@@ -185,5 +216,5 @@ def main():
     play_again()
 
 
-#main()
+# main()
 new_game()
