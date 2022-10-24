@@ -105,8 +105,8 @@ INSTRUCTIONS
 
 # Set global variables
 deck = []
-player_hand_list = []
-computer_hand_list = []
+player_hand = []
+computer_hand = []
 stockpile_list = []
 books = []
 
@@ -145,6 +145,8 @@ def build_deck():
         -   Hearts: \u2665
         - Diamonds: \u2666
     """
+    # global deck
+    # print(deck)
 
     suit_list = ["\u2660", "\u2663", "\u2665", "\u2666"]
     rank_list = [
@@ -156,10 +158,52 @@ def build_deck():
         for rank in rank_list:
             deck.append(rank + suit)
 
+    print(f"\nOriginal deck: \n {deck} \n")
+
+
+
+
+def shuffle_deck():
+    """
+    - Shuffle the deck
+    """
+    shuffled_deck = []
+    random.shuffle(deck)
+
     for card in deck:
-        print(card, end=" ")
-    print(deck)
+        shuffled_deck.append(card)
+
+    return shuffled_deck
+
+
+def deal_cards():
+    """
+    - Add 7 cards to computer's hand
+    - Add 7 cards to player's hand
+    - Add remainder to the stockpile
+    """
+
+    deck_count = len(deck)
+    print(f"Deck count before deal: {deck_count}")
+
     
+    # while deck_count >= 38:
+    for card in deck:
+        card_index = deck.index(card)
+        deck.pop(0)
+        # player_hand = deck[:7]
+        # player_hand.add(0)
+        # computer_hand = deck[7:14]
+
+        print(f"Current deck count: {deck_count}")
+        # player_hand.append(card)
+        print(card_index, " ", card)
+    
+    print(f"Deck adter pop: {deck}")
+    print(f"Deck count: {deck_count}")
+    print(f"Player hand: {player_hand}")
+    print(f"Computer hand: {computer_hand}")
+        
 
 def play_game():
     """
@@ -175,7 +219,7 @@ def play_game():
     print("Function running: play_game()")
 
 
-def player_hand():
+def player_hands():
     """
     - # Cards in hand
     - Ranks & suits
@@ -183,6 +227,8 @@ def player_hand():
     """
 
     print("Function running: player_hand()")
+
+    
 
 
 def player_books():
@@ -257,5 +303,8 @@ def main():
 
 
 # main()
-new_game()
+# new_game()
 build_deck()
+shuffle_deck()
+print(f"Shuffled deck:\n {deck}")
+deal_cards()
