@@ -68,7 +68,10 @@ The game ends when either:
     """
     print("-" * 80)
     print(rules_pt1)
-    input("┌────────────────────────────┐\n│ Press enter to continue... │\n└────────────────────────────┘")
+    btn_top = "┌────────────────────────────┐\n"
+    btn_middle = "│ Press enter to continue... │\n"
+    btn_bottom = "└────────────────────────────┘"
+    input(btn_top + btn_middle + btn_bottom)
     sleep(0.5)
     clear_screen()
     print(rules_pt2)
@@ -120,7 +123,10 @@ def new_game():
     sleep(0.5)
     print("Go Fish!")
     print("\u2588")
-    input("┌───────────────────────────────┐\n│ Press enter for game rules... │\n└───────────────────────────────┘")
+    btn_top = "┌───────────────────────────────┐\n"
+    btn_middle = "│ Press enter for game rules... │\n"
+    btn_bottom = "└───────────────────────────────┘"
+    input(btn_top + btn_middle + btn_bottom)
     print("Function running: new_game()")
     sleep(0.5)
     clear_screen()
@@ -140,14 +146,20 @@ def build_deck():
         - Diamonds: \u2666
     """
 
-    global deck
-    global rank
-    for suit in ["\u2660", "\u2663", "\u2665", "\u2666"]:
-        for rank in ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]:
-            deck.append(rank+suit)
-    for card in deck:
-        print(card, end = " ")
+    suit_list = ["\u2660", "\u2663", "\u2665", "\u2666"]
+    rank_list = [
+        "A", "2", "3", "4", "5", "6", "7",
+        "8", "9", "10", "J", "Q", "K"
+    ]
 
+    for suit in suit_list:
+        for rank in rank_list:
+            deck.append(rank + suit)
+
+    for card in deck:
+        print(card, end=" ")
+    print(deck)
+    
 
 def play_game():
     """
@@ -245,5 +257,5 @@ def main():
 
 
 # main()
-# new_game()
+new_game()
 build_deck()
