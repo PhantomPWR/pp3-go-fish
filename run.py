@@ -1,6 +1,8 @@
 import os
 from time import sleep
 
+import random
+
 
 def clear_screen():
     """
@@ -98,6 +100,14 @@ INSTRUCTIONS
     print("-" * 80)
 
 
+# Set global variables
+deck = []
+player_hand_list = []
+computer_hand_list = []
+stockpile_list = []
+books = []
+
+
 def new_game():
     """
     - Display game rules & instructions
@@ -118,7 +128,25 @@ def new_game():
     game_instructions()
 
 
+def build_deck():
+    """
+    - Create suits
+    - Create ranks
+    - Add ranks & suits to deck
+    - UTF codes:
+        -   Spades: \u2660
+        -    Clubs: \u2663
+        -   Hearts: \u2665
+        - Diamonds: \u2666
+    """
 
+    global deck
+    global rank
+    for suit in ["\u2660", "\u2663", "\u2665", "\u2666"]:
+        for rank in ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]:
+            deck.append(rank+suit)
+    for card in deck:
+        print(card, end = " ")
 
 
 def play_game():
@@ -217,4 +245,5 @@ def main():
 
 
 # main()
-new_game()
+# new_game()
+build_deck()
