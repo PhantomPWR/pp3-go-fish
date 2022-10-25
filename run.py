@@ -105,7 +105,7 @@ INSTRUCTIONS
 
 # Set global variables
 deck = []
-player_hand = []
+human_hand = []
 computer_hand = []
 stockpile_list = []
 books = []
@@ -145,8 +145,6 @@ def build_deck():
         -   Hearts: \u2665
         - Diamonds: \u2666
     """
-    # global deck
-    # print(deck)
 
     suit_list = ["\u2660", "\u2663", "\u2665", "\u2666"]
     rank_list = [
@@ -158,33 +156,43 @@ def build_deck():
         for rank in rank_list:
             deck.append(rank + suit)
 
-    print(f"\nOriginal deck: \n {deck} \n")
-
-
+    print(f"\nOriginal deck:\n {deck}")
 
 
 def shuffle_deck():
     """
     - Shuffle the deck
     """
+    global shuffled_deck
+    # global deck_count
     shuffled_deck = []
     random.shuffle(deck)
 
     for card in deck:
         shuffled_deck.append(card)
 
+    # deck_count = len(shuffled_deck)
     return shuffled_deck
+
+
+def deck_card_count():
+    """
+    - Count the amount of cards in the shuffled deck
+    """
+    global deck_count
+    deck_count = len(shuffled_deck)
 
 
 def select_card_from_deck():
     """
-    - Select card from deck
+    - Select card from shuffled deck
     """
 
-    select_card_from_deck.selected_card = deck[0]
-    print(f"Selected card: {select_card_from_deck.selected_card}")
+    global selected_card
+    selected_card = ""
+    selected_card = shuffled_deck[0]
 
-    # return selected_card
+    return selected_card
 
 
 # add card to hand
@@ -193,12 +201,21 @@ def add_card_to_hand():
     - Add card to hand
     """
 
-    player_hand.append(select_card_from_deck.selected_card)
-    print(f"Player hand: {player_hand}")
+    deck_card_count()
 
-    return player_hand
-# delete card from deck
+    if deck_count % 2 != 1:
+        human_hand.append(selected_card)
+    else:
+        computer_hand.append(selected_card)
 
+    # return player_hand
+
+
+def remove_card_from_deck():
+    """
+    - Remove selected card from shuffled deck
+    """
+    shuffled_deck.remove(selected_card)
 
 
 def deal_cards():
@@ -208,31 +225,27 @@ def deal_cards():
     - Add remainder to the stockpile
     """
 
-    
+    deck_card_count()
 
-    deck_count = len(deck)
-    print(f"Deck count before deal: {deck_count}")
+    # Test output
+    sleep(1)
+    print(f"\nDeck count before deal: {deck_count}")
 
-    select_card_from_deck()
-    add_card_to_hand()
+    while deck_count != 38:
+        select_card_from_deck()
+        add_card_to_hand()
+        remove_card_from_deck()
+        deck_card_count()
 
-    # while deck_count >= 38:
-    # for card in deck:
-    #     card_index = deck.index(card)
-    #     deck.pop(0)
-        # player_hand = deck[:7]
-        # player_hand.add(0)
-        # computer_hand = deck[7:14]
-
-        # print(f"Current deck count: {deck_count}")
-        # player_hand.append(card)
-        # print(card_index, " ", card)
-
-    
-    print(f"Deck adter pop: {deck}")
-    print(f"Deck count: {deck_count}")
-    print(f"Player hand: {player_hand}")
-    print(f"Computer hand: {computer_hand}")
+        # Test output
+        sleep(1)
+        print(f"\n------------------\nSelected card: {selected_card}\n------------------\n")
+        sleep(1)
+        print(f"\n------------------------------------------------------------\nHuman hand({len(human_hand)}): {human_hand}")
+        print(f"\nComputer hand({len(computer_hand)}): {computer_hand}\n------------------------------------------------------------")
+        sleep(1)
+        print(f"\nDeck count after deal: {deck_count}\n")
+        print(f"\nShuffled deck after deal:\n {shuffled_deck}\n")
         
 
 def play_game():
@@ -249,14 +262,14 @@ def play_game():
     print("Function running: play_game()")
 
 
-def player_hands():
+def human_hands():
     """
     - # Cards in hand
     - Ranks & suits
     - Contains books (4-of-a-kind)?
     """
 
-    print("Function running: player_hand()")
+    print("Function running: human_hand()")
 
     
 
@@ -323,7 +336,7 @@ def main():
     new_game()
     game_rules()
     play_game()
-    player_hand()
+    human_hand()
     player_books()
     stock_pile()
     input_validation()
@@ -336,5 +349,5 @@ def main():
 # new_game()
 build_deck()
 shuffle_deck()
-print(f"Shuffled deck:\n {deck}")
+print(f"\nShuffled deck:\n {shuffled_deck}")
 deal_cards()
