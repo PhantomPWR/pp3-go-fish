@@ -176,6 +176,31 @@ def shuffle_deck():
     return shuffled_deck
 
 
+def select_card_from_deck():
+    """
+    - Select card from deck
+    """
+
+    select_card_from_deck.selected_card = deck[0]
+    print(f"Selected card: {select_card_from_deck.selected_card}")
+
+    # return selected_card
+
+
+# add card to hand
+def add_card_to_hand():
+    """
+    - Add card to hand
+    """
+
+    player_hand.append(select_card_from_deck.selected_card)
+    print(f"Player hand: {player_hand}")
+
+    return player_hand
+# delete card from deck
+
+
+
 def deal_cards():
     """
     - Add 7 cards to computer's hand
@@ -183,21 +208,26 @@ def deal_cards():
     - Add remainder to the stockpile
     """
 
+    
+
     deck_count = len(deck)
     print(f"Deck count before deal: {deck_count}")
 
-    
+    select_card_from_deck()
+    add_card_to_hand()
+
     # while deck_count >= 38:
-    for card in deck:
-        card_index = deck.index(card)
-        deck.pop(0)
+    # for card in deck:
+    #     card_index = deck.index(card)
+    #     deck.pop(0)
         # player_hand = deck[:7]
         # player_hand.add(0)
         # computer_hand = deck[7:14]
 
-        print(f"Current deck count: {deck_count}")
+        # print(f"Current deck count: {deck_count}")
         # player_hand.append(card)
-        print(card_index, " ", card)
+        # print(card_index, " ", card)
+
     
     print(f"Deck adter pop: {deck}")
     print(f"Deck count: {deck_count}")
