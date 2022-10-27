@@ -249,7 +249,7 @@ def deal_cards():
         print(f"\nDeck count after deal: {deck_count}\n")
         print(f"\nShuffled deck after deal:\n {shuffled_deck}\n")
         print(f"\nStockpile:\n {stockpile_list}\n")
-        
+       
 
 def play_game():
     """
