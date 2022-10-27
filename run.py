@@ -164,14 +164,12 @@ def shuffle_deck():
     - Shuffle the deck
     """
     global shuffled_deck
-    # global deck_count
     shuffled_deck = []
     random.shuffle(deck)
 
     for card in deck:
         shuffled_deck.append(card)
 
-    # deck_count = len(shuffled_deck)
     return shuffled_deck
 
 
@@ -224,28 +222,33 @@ def deal_cards():
     - Add 7 cards to player's hand
     - Add remainder to the stockpile
     """
-
+    
+    global stockpile_list
     deck_card_count()
 
     # Test output
     sleep(1)
     print(f"\nDeck count before deal: {deck_count}")
 
+    # Deal player hands
     while deck_count != 38:
         select_card_from_deck()
         add_card_to_hand()
         remove_card_from_deck()
         deck_card_count()
 
+        # Add remaing 38 cards to stockpile
+        if deck_count == 38:
+            stockpile_list.extend(shuffled_deck)
+
         # Test output
         sleep(1)
         print(f"\n------------------\nSelected card: {selected_card}\n------------------\n")
-        sleep(1)
         print(f"\n------------------------------------------------------------\nHuman hand({len(human_hand)}): {human_hand}")
         print(f"\nComputer hand({len(computer_hand)}): {computer_hand}\n------------------------------------------------------------")
-        sleep(1)
         print(f"\nDeck count after deal: {deck_count}\n")
         print(f"\nShuffled deck after deal:\n {shuffled_deck}\n")
+        print(f"\nStockpile:\n {stockpile_list}\n")
         
 
 def play_game():
@@ -262,7 +265,7 @@ def play_game():
     print("Function running: play_game()")
 
 
-def human_hands():
+def human_table():
     """
     - # Cards in hand
     - Ranks & suits
@@ -270,8 +273,18 @@ def human_hands():
     """
 
     print("Function running: human_hand()")
+    print(f"Human hand: {human_hand}")
 
-    
+
+def computer_table():
+    """
+    - # Cards in hand
+    - Ranks & suits
+    - Contains books (4-of-a-kind)?
+    """
+
+    print("Function running: human_hand()")
+    print(f"Computer hand: {computer_hand}")
 
 
 def player_books():
