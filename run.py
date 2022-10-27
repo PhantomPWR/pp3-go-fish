@@ -156,8 +156,8 @@ def build_deck():
     for suit in suit_list:
         for rank in rank_list:
             deck.append(rank + suit)
-
-    print(f"\nOriginal deck:\n {deck}")
+    # Test output
+    # print(f"\nOriginal deck:\n {deck}")
 
 
 def shuffle_deck():
@@ -171,6 +171,8 @@ def shuffle_deck():
     for card in deck:
         shuffled_deck.append(card)
 
+    # Test output
+    # print(f"\nShuffled deck:\n {shuffled_deck}")
     return shuffled_deck
 
 
@@ -194,7 +196,6 @@ def select_card_from_deck():
     return selected_card
 
 
-# add card to hand
 def add_card_to_hand():
     """
     - Add card to hand
@@ -206,8 +207,6 @@ def add_card_to_hand():
         human_hand.append(selected_card)
     else:
         computer_hand.append(selected_card)
-
-    # return player_hand
 
 
 def remove_card_from_deck():
@@ -228,8 +227,8 @@ def deal_cards():
     deck_card_count()
 
     # Test output
-    sleep(1)
-    print(f"\nDeck count before deal: {deck_count}")
+    # sleep(1)
+    # print(f"\nDeck count before deal: {deck_count}")
 
     # Deal player hands
     while deck_count != 38:
@@ -242,15 +241,34 @@ def deal_cards():
         if deck_count == 38:
             stockpile_list.extend(shuffled_deck)
 
-        # Test output
-        sleep(1)
-        print(f"\n------------------\nSelected card: {selected_card}\n------------------\n")
-        print(f"\n------------------------------------------------------------\nHuman hand({len(human_hand)}): {human_hand}")
-        print(f"\nComputer hand({len(computer_hand)}): {computer_hand}\n------------------------------------------------------------")
-        print(f"\nDeck count after deal: {deck_count}\n")
-        print(f"\nShuffled deck after deal:\n {shuffled_deck}\n")
-        print(f"\nStockpile:\n {stockpile_list}\n")
+    # Test output
+    sleep(1)
+    # print(f"\n------------------\nSelected card: {selected_card}\n------------------\n")
+    print(f"\n------------------------------------------------------------\nHuman hand({len(human_hand)}): {human_hand}")
+    print(f"\nComputer hand({len(computer_hand)}): {computer_hand}\n------------------------------------------------------------")
+    # print(f"\nDeck count after deal: {deck_count}\n")
+    # print(f"\nShuffled deck after deal:\n {shuffled_deck}\n")
+    print(f"\nStockpile:\n {stockpile_list}\n")
        
+
+human_requested_card = ""
+
+
+def check_hand():
+    """
+    - Check hand for requested card
+    """
+    
+    print(f"Computer hand: {computer_hand}")
+
+    card_rank = human_requested_card[0]
+    print(card_rank)
+
+    if human_requested_card[0] in computer_hand:
+        print(f"Computer has {human_requested_card}")
+    else:
+        print(f"Computer doesn't have {human_requested_card}")
+
 
 def play_game_round():
     """
@@ -262,8 +280,13 @@ def play_game_round():
      - Stockpile
      - Card requests
      """
-
+    
     print("Function running: play_game()")
+    global human_requested_card
+    human_requested_card = input("Which card would you like to request? ")
+
+    print(f"You requested: {human_requested_card}")
+    check_hand()
 
 
 def human_table():
@@ -333,7 +356,7 @@ def switch_player():
     global active_player
     if active_player == "user":
         active_player = "computer"
-        print(f"It is the computer's turn to play")
+        print("It is the computer's turn to play")
     else:
         active_player == "user"
     print("Function running: switch_player()")
@@ -369,6 +392,6 @@ def main():
 # new_game()
 build_deck()
 shuffle_deck()
-print(f"\nShuffled deck:\n {shuffled_deck}")
 deal_cards()
 switch_player()
+play_game_round()
