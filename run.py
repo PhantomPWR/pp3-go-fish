@@ -109,6 +109,7 @@ human_hand = []
 computer_hand = []
 stockpile_list = []
 books = []
+active_player = "human"
 
 
 def new_game():
@@ -251,13 +252,13 @@ def deal_cards():
         print(f"\nStockpile:\n {stockpile_list}\n")
        
 
-def play_game():
+def play_game_round():
     """
     Keep track of:
-     - Player 1 hand
-     - Player 2 hand
-     - Player 1 books
-     - Player 2 books
+     - Human hand
+     - Computer hand
+     - Human books
+     - Computer books
      - Stockpile
      - Card requests
      """
@@ -329,8 +330,14 @@ def switch_player():
     """
     Switch active player after turn has finished
     """
-
+    global active_player
+    if active_player == "user":
+        active_player = "computer"
+        print(f"It is the computer's turn to play")
+    else:
+        active_player == "user"
     print("Function running: switch_player()")
+    print(f"Active player: {active_player}")
 
 
 def play_again():
@@ -348,7 +355,7 @@ def main():
 
     new_game()
     game_rules()
-    play_game()
+    play_game_round()
     human_hand()
     player_books()
     stock_pile()
@@ -364,3 +371,4 @@ build_deck()
 shuffle_deck()
 print(f"\nShuffled deck:\n {shuffled_deck}")
 deal_cards()
+switch_player()
