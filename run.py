@@ -110,6 +110,7 @@ computer_hand = []
 stockpile_list = []
 books = []
 active_player = "human"
+opponent = "computer"
 
 
 def new_game():
@@ -258,16 +259,24 @@ def check_hand():
     """
     - Check hand for requested card
     """
-    
-    print(f"Computer hand: {computer_hand}")
 
-    card_rank = human_requested_card[0]
-    print(card_rank)
+    for card in computer_hand:
 
-    if human_requested_card[0] in computer_hand:
-        print(f"Computer has {human_requested_card}")
-    else:
-        print(f"Computer doesn't have {human_requested_card}")
+        match_list = []
+        match = card[:1]
+
+        if human_requested_card == match:
+            match_list.append(match)
+            print(f"Match list: {match_list}")
+            human_hand.append(card)
+            computer_hand.remove(card)
+            print(f"\n------------------------------------------------------------\nHuman hand({len(human_hand)}): {human_hand}")
+            print(f"\nComputer hand({len(computer_hand)}): {computer_hand}\n------------------------------------------------------------")
+            play_game_round()
+        else:
+            print(f"The {opponent} doesn't have that card.")
+
+
 
 
 def play_game_round():
@@ -281,7 +290,7 @@ def play_game_round():
      - Card requests
      """
     
-    print("Function running: play_game()")
+    print("Function running: play_game_round()")
     global human_requested_card
     human_requested_card = input("Which card would you like to request? ")
 
@@ -354,11 +363,13 @@ def switch_player():
     Switch active player after turn has finished
     """
     global active_player
-    if active_player == "user":
+    if active_player == "human":
         active_player = "computer"
+        opponent = "human"
         print("It is the computer's turn to play")
     else:
-        active_player == "user"
+        active_player = "human"
+        opponent = "computer"
     print("Function running: switch_player()")
     print(f"Active player: {active_player}")
 
