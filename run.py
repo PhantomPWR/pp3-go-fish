@@ -260,21 +260,22 @@ def check_hand():
     - Check hand for requested card
     """
 
-    for card in computer_hand:
+    match = [card for card in computer_hand if human_requested_card in card]
+    print("Match")
+    print(match)
+    if match:
+        human_hand.extend(match)
+    else:
+        print(f"The {opponent} doesn't have that card.")
 
-        match_list = []
-        match = card[:1]
+    for card in match:
+        computer_hand.remove(card)
+            
+    print(f"\n------------------------------------------------------------\nHuman hand({len(human_hand)}): {human_hand}")
+    print(f"\nComputer hand({len(computer_hand)}): {computer_hand}\n------------------------------------------------------------")
+    play_game_round()
 
-        if human_requested_card == match:
-            match_list.append(match)
-            print(f"Match list: {match_list}")
-            human_hand.append(card)
-            computer_hand.remove(card)
-            print(f"\n------------------------------------------------------------\nHuman hand({len(human_hand)}): {human_hand}")
-            print(f"\nComputer hand({len(computer_hand)}): {computer_hand}\n------------------------------------------------------------")
-            play_game_round()
-        else:
-            print(f"The {opponent} doesn't have that card.")
+    
 
 
 
@@ -404,5 +405,6 @@ def main():
 build_deck()
 shuffle_deck()
 deal_cards()
-switch_player()
+# switch_player()
+print(f"Active player: {active_player}")
 play_game_round()
