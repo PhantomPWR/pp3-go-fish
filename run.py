@@ -106,6 +106,7 @@ INSTRUCTIONS
 # Set global variables
 deck = []
 human_hand = []
+human_books = 0
 computer_hand = []
 stockpile_list = []
 books = []
@@ -129,7 +130,9 @@ def new_game():
     btn_middle = "│ Press enter for game rules... │\n"
     btn_bottom = "└───────────────────────────────┘"
     input(btn_top + btn_middle + btn_bottom)
-    print("Function running: new_game()")
+    
+    # Test output
+    print("\n*** Function running: new_game() ***\n")
     sleep(0.5)
     clear_screen()
     game_rules()
@@ -224,6 +227,9 @@ def deal_cards():
     - Add remainder to the stockpile
     """
     
+    # Test output
+    print("\n*** Function running: deal_cards() ***\n")
+
     global stockpile_list
     deck_card_count()
 
@@ -250,6 +256,7 @@ def deal_cards():
     print(f"\n------------------------------------------------------------\n")
     print(f"Human hand({len(human_hand)}):", end=" ")
     print(*human_hand)
+    print(f"\nHuman books: {human_books}")
     print(f"\nComputer hand({len(computer_hand)}):", end=" ")
     print(*computer_hand)
     print(f"\n------------------------------------------------------------")
@@ -264,38 +271,52 @@ def check_hand():
     """
     - Check hand for requested card
     """
+    
+    # Test output
+    print("\n*** Function running: check_hand() ***\n")
 
     match = [card for card in computer_hand if human_requested_card in card]
-    print("Match")
-    print(match)
+    print("\nMatch:", end=" ")
+    print(*match)
     if match:
         human_hand.extend(match)
+        check_for_books()
     else:
         print(f"The {opponent} doesn't have that card.")
+        sleep(0.5)
         draw_from_stockpile()
 
     for card in match:
         computer_hand.remove(card)
             
-        print(f"\n------------------------------------------------------------\n")
-        print(f"Human hand({len(human_hand)}):", end=" ")
-        print(*human_hand)
-        print(f"\nComputer hand({len(computer_hand)}):", end=" ")
-        print(*computer_hand)
-        print(f"\n------------------------------------------------------------")
+    print(f"\n------------------------------------------------------------\n")
+    print(f"Human hand({len(human_hand)}):", end=" ")
+    print(*human_hand)
+    print(f"\nHuman books: {human_books}")
+    print(f"\nComputer hand({len(computer_hand)}):", end=" ")
+    print(*computer_hand)
+    print(f"\n------------------------------------------------------------")
+
     play_game_round()
 
     
 def draw_from_stockpile():
     """
     - Draw a card from the stockpile
+    - Add card to player's hand
     """
+    
+    # Test output
+    print("\n*** Function running: draw_from_stockpile() ***\n")
+    
+    print(f"Drawing a card from the stockpile...")
     selected_card = stockpile_list[0]
     human_hand.append(selected_card)
     stockpile_list.remove(selected_card)
 
-    print(f"\nStockpile({len(stockpile_list)}):\n")
-    print(*stockpile_list, end=" ")
+    check_for_books()
+
+    stock_pile()
 
 
 
@@ -310,11 +331,13 @@ def play_game_round():
      - Card requests
      """
     
-    print("Function running: play_game_round()")
+    # Test output
+    print("\n*** Function running: play_game_round() ***\n")
+
     global human_requested_card
     human_requested_card = input("Which card would you like to request? ")
 
-    print(f"You requested: {human_requested_card}")
+    print(f"\nYou requested: {human_requested_card}")
     check_hand()
 
 
@@ -325,7 +348,7 @@ def human_table():
     - Contains books (4-of-a-kind)?
     """
 
-    print("Function running: human_hand()")
+    print("\n*** Function running: human_table() ***\n")
     print(f"Human hand: {human_hand}")
 
 
@@ -336,8 +359,42 @@ def computer_table():
     - Contains books (4-of-a-kind)?
     """
 
-    print("Function running: human_hand()")
+    # Test output
+    print("\n*** Function running: computer_table() ***\n")
     print(f"Computer hand: {computer_hand}")
+
+
+def check_for_books():
+    """
+    - Check if the active player has a book
+      after each round
+    """
+    
+    # Test output
+    print("\n*** Function running: check_for_books() ***\n")
+    sleep(1)
+    
+    global human_books
+    duplicate_ranks = [card for card in human_hand if human_requested_card in card]
+
+    if duplicate_ranks:
+        print(f"Duplicates({len(duplicate_ranks)}):", end=" ")
+        print(*duplicate_ranks)
+
+    if len(duplicate_ranks) == 4:
+        
+        for card in duplicate_ranks:
+            human_hand.remove(card)
+        human_books += 1
+    
+    sleep(0.5)
+
+    # match = [card for card in computer_hand if human_requested_card in card]
+    # print("\nMatch:", end=" ")
+    # print(*match)
+    # if match:
+    #     human_hand.extend(match)
+
 
 
 def player_books():
@@ -346,7 +403,8 @@ def player_books():
     - Which player has how many books
     """
 
-    print("Function running: player_books()")
+    # Test output
+    print("\n*** Function running: player_books() ***\n")
 
 
 def stock_pile():
@@ -354,8 +412,12 @@ def stock_pile():
     - # Cards left
     - Rank and suit of cards left
     """
+    
+    # Test output
+    print("\n*** Function running: stock_pile() ***\n")
 
-    print("Function running: stock_pile()")
+    print(f"\nStockpile({len(stockpile_list)}):\n")
+    print(*stockpile_list, end=" ")
 
 
 def input_validation():
@@ -366,7 +428,8 @@ def input_validation():
      - Range
      """
 
-    print("Function running: input_validation()")
+    # Test output
+    print("\n*** Function running: input_validation() ***\n")
 
 
 def randomiser():
@@ -375,6 +438,7 @@ def randomiser():
     - Check if card is available
     """
 
+    # Test output
     print("Function running: randomiser()")
 
 
@@ -390,7 +454,9 @@ def switch_player():
     else:
         active_player = "human"
         opponent = "computer"
-    print("Function running: switch_player()")
+
+    # Test output
+    print("\n*** Function running: switch_player() ***\n")
     print(f"\nActive player: {active_player}")
 
 
@@ -399,7 +465,9 @@ def play_again():
     - Reset all
     - Exclude rules & instructions
     """
-    print("Function running: play_again()")
+
+    # Test output
+    print("\n*** Function running: play_again() ***\n")
 
 
 def main():
