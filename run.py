@@ -245,11 +245,16 @@ def deal_cards():
     # Test output
     sleep(1)
     # print(f"\n------------------\nSelected card: {selected_card}\n------------------\n")
-    print(f"\n------------------------------------------------------------\nHuman hand({len(human_hand)}): {human_hand}")
-    print(f"\nComputer hand({len(computer_hand)}): {computer_hand}\n------------------------------------------------------------")
     # print(f"\nDeck count after deal: {deck_count}\n")
     # print(f"\nShuffled deck after deal:\n {shuffled_deck}\n")
-    print(f"\nStockpile:\n {stockpile_list}\n")
+    print(f"\n------------------------------------------------------------\n")
+    print(f"Human hand({len(human_hand)}):", end=" ")
+    print(*human_hand)
+    print(f"\nComputer hand({len(computer_hand)}):", end=" ")
+    print(*computer_hand)
+    print(f"\n------------------------------------------------------------")
+    print(f"\nStockpile({len(stockpile_list)}):\n")
+    print(*stockpile_list, end=" ")
        
 
 human_requested_card = ""
@@ -267,16 +272,30 @@ def check_hand():
         human_hand.extend(match)
     else:
         print(f"The {opponent} doesn't have that card.")
+        draw_from_stockpile()
 
     for card in match:
         computer_hand.remove(card)
             
-    print(f"\n------------------------------------------------------------\nHuman hand({len(human_hand)}): {human_hand}")
-    print(f"\nComputer hand({len(computer_hand)}): {computer_hand}\n------------------------------------------------------------")
+        print(f"\n------------------------------------------------------------\n")
+        print(f"Human hand({len(human_hand)}):", end=" ")
+        print(*human_hand)
+        print(f"\nComputer hand({len(computer_hand)}):", end=" ")
+        print(*computer_hand)
+        print(f"\n------------------------------------------------------------")
     play_game_round()
 
     
+def draw_from_stockpile():
+    """
+    - Draw a card from the stockpile
+    """
+    selected_card = stockpile_list[0]
+    human_hand.append(selected_card)
+    stockpile_list.remove(selected_card)
 
+    print(f"\nStockpile({len(stockpile_list)}):\n")
+    print(*stockpile_list, end=" ")
 
 
 
@@ -372,7 +391,7 @@ def switch_player():
         active_player = "human"
         opponent = "computer"
     print("Function running: switch_player()")
-    print(f"Active player: {active_player}")
+    print(f"\nActive player: {active_player}")
 
 
 def play_again():
@@ -406,5 +425,5 @@ build_deck()
 shuffle_deck()
 deal_cards()
 # switch_player()
-print(f"Active player: {active_player}")
+print(f"\n\nActive player: {active_player}")
 play_game_round()
