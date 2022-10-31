@@ -249,7 +249,7 @@ def deal_cards():
             stockpile_list.extend(shuffled_deck)
 
     # Test output
-    sleep(1)
+    # sleep(1)
     # print(f"\n------------------\nSelected card: {selected_card}\n------------------\n")
     # print(f"\nDeck count after deal: {deck_count}\n")
     # print(f"\nShuffled deck after deal:\n {shuffled_deck}\n")
@@ -269,9 +269,10 @@ human_requested_card = ""
 
 def check_hand():
     """
-    - Check hand for requested card
+    - Check hand for requested card otherwise
+      draw a card from the stockpile
     """
-    
+
     # Test output
     print("\n*** Function running: check_hand() ***\n")
 
@@ -305,7 +306,6 @@ def draw_from_stockpile():
     - Draw a card from the stockpile
     - Add card to player's hand
     """
-    
     # Test output
     print("\n*** Function running: draw_from_stockpile() ***\n")
     
@@ -316,7 +316,7 @@ def draw_from_stockpile():
 
     check_for_books()
 
-    stock_pile()
+    # stock_pile()
 
 
 
@@ -335,8 +335,9 @@ def play_game_round():
     print("\n*** Function running: play_game_round() ***\n")
 
     global human_requested_card
-    human_requested_card = input("Which card would you like to request? ")
-
+    stock_pile()
+    human_input = input("\nWhich card would you like to request? ")
+    human_requested_card = human_input.upper()
     print(f"\nYou requested: {human_requested_card}")
     check_hand()
 
@@ -345,7 +346,7 @@ def human_table():
     """
     - # Cards in hand
     - Ranks & suits
-    - Contains books (4-of-a-kind)?
+    - Contains books (4 of equal rank)?
     """
 
     print("\n*** Function running: human_table() ***\n")
@@ -356,7 +357,7 @@ def computer_table():
     """
     - # Cards in hand
     - Ranks & suits
-    - Contains books (4-of-a-kind)?
+    - Contains books (4 of equal rank)?
     """
 
     # Test output
@@ -366,13 +367,13 @@ def computer_table():
 
 def check_for_books():
     """
-    - Check if the active player has a book
+    - Check if the active player has a book (4 of equal rank)
       after each round
     """
     
     # Test output
     print("\n*** Function running: check_for_books() ***\n")
-    sleep(1)
+    # sleep(1)
     
     global human_books
     duplicate_ranks = [card for card in human_hand if human_requested_card in card]
@@ -387,14 +388,7 @@ def check_for_books():
             human_hand.remove(card)
         human_books += 1
     
-    sleep(0.5)
-
-    # match = [card for card in computer_hand if human_requested_card in card]
-    # print("\nMatch:", end=" ")
-    # print(*match)
-    # if match:
-    #     human_hand.extend(match)
-
+    # sleep(0.5)
 
 
 def player_books():
@@ -418,6 +412,9 @@ def stock_pile():
 
     print(f"\nStockpile({len(stockpile_list)}):\n")
     print(*stockpile_list, end=" ")
+
+    if stockpile_list == [] and computer_hand == []:
+        game_end()
 
 
 def input_validation():
@@ -458,6 +455,18 @@ def switch_player():
     # Test output
     print("\n*** Function running: switch_player() ***\n")
     print(f"\nActive player: {active_player}")
+
+
+def game_end():
+    """
+    - Game ends when either player's hand AND
+      the stockpile are empty
+    """
+    
+    # Test output
+    print("\n*** Function running: game_end() ***\n")
+
+    print("End of game")
 
 
 def play_again():
