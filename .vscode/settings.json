@@ -23,6 +23,6 @@
    "files.autoSave": "off",
    "workbench.colorTheme": "Visual Studio Dark",
    "editor.defaultFormatter": "HookyQR.beautify",
-   "editor.folding": false,
+   "editor.folding": true,
    "editor.foldingImportsByDefault": true
 }
