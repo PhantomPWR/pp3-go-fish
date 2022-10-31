@@ -1,4 +1,5 @@
 import os
+
 from time import sleep
 
 import random
@@ -24,46 +25,46 @@ def game_rules():
     """
 
     rules_pt1 = """
-RULES OF THE GAME
------------------
+    RULES OF THE GAME
+    -----------------
 
-The Pack
---------
-- The game is played using a 52-card pack
+    The Pack
+    --------
+    - The game is played using a 52-card pack
 
-Object of the Game
-------------------
-- The goal is to win the most books of cards
-- A book is 4 cards of equal rank, eg.
-    3\u2660 3\u2663 3\u2665 3\u2666, J\u2660 J\u2663 J\u2665 J\u2666, etc
+    Object of the Game
+    ------------------
+    - The goal is to win the most books of cards
+    - A book is 4 cards of equal rank, eg.
+        3\u2660 3\u2663 3\u2665 3\u2666, J\u2660 J\u2663 J\u2665 J\u2666, etc
 
-The Players
------------
-- In this version of Go Fish!, you are playing against the computer
+    The Players
+    -----------
+    - In this version of Go Fish!, you are playing against the computer
 
-The Deal
---------
-- Each player starts with 7 cards
-- The remaing cards are placed face down
-  on the table to form the stockpile
+    The Deal
+    --------
+    - Each player starts with 7 cards
+    - The remaing cards are placed face down
+    on the table to form the stockpile
 
-    """
-    rules_pt2 = """
-Playing the Game
-----------------
-1. You start by requesting a card from the computer
-2. If the computer has the card you requested, it will be added to
-   your hand and you get another turn
-3. If the computer doesn't have the card you requested, you draw a card
-    from the stockpile
-4. Now it's the computer's turn
+        """
+        rules_pt2 = """
+    Playing the Game
+    ----------------
+    1. You start by requesting a card from the computer
+    2. If the computer has the card you requested, it will be added to
+    your hand and you get another turn
+    3. If the computer doesn't have the card you requested, you draw a card
+        from the stockpile
+    4. Now it's the computer's turn
 
-Game End
---------
-The game ends when either:
-- All 13 books have been won between the two players
-- A player has an empty hand and there are no cards left in
-  the stockpile
+    Game End
+    --------
+    The game ends when either:
+    - All 13 books have been won between the two players
+    - A player has an empty hand and there are no cards left in
+    the stockpile
 
     """
     print("-" * 80)
@@ -84,20 +85,20 @@ def game_instructions():
     """
 
     instructions = """
-INSTRUCTIONS
-------------
+    INSTRUCTIONS
+    ------------
 
-1. Enter your name
-2. Enter the card you wish to request from the computer
-3. For number ranks, you enter 2 to 10
-4. For Jack, Queen, King & Ace, enter either the full name or
-   the first letter, e.g. Q or Queen
-5. If you need to review the rules & instructions during the game,
-   enter either "H" or "Help"
-6. After the game has ended, enter either:
-   - "Y" to play again or
-   - "N" to exit the game
-    """
+    1. Enter your name
+    2. Enter the card you wish to request from the computer
+    3. For number ranks, you enter 2 to 10
+    4. For Jack, Queen, King & Ace, enter either the full name or
+    the first letter, e.g. Q or Queen
+    5. If you need to review the rules & instructions during the game,
+    enter either "H" or "Help"
+    6. After the game has ended, enter either:
+    - "Y" to play again or
+    - "N" to exit the game
+        """
 
     print(instructions)
     print("-" * 80)
