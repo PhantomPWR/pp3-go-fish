@@ -5,103 +5,106 @@ from time import sleep
 import random
 
 
-def clear_screen():
+class GoFish:
     """
-    Detect operating system and run relevant
-    clear screen command
+    - Runs the entire game
     """
-    # Linux & OSX
-    if os.name == "posix":
-        os.system("clear")
-
-    # Windows
-    else:
-        os.system("cls")
-
-
-def game_rules():
-    """
-    - Game rules
-    """
-
-    rules_pt1 = """
-    RULES OF THE GAME
-    -----------------
-
-    The Pack
-    --------
-    - The game is played using a 52-card pack
-
-    Object of the Game
-    ------------------
-    - The goal is to win the most books of cards
-    - A book is 4 cards of equal rank, eg.
-        3\u2660 3\u2663 3\u2665 3\u2666, J\u2660 J\u2663 J\u2665 J\u2666, etc
-
-    The Players
-    -----------
-    - In this version of Go Fish!, you are playing against the computer
-
-    The Deal
-    --------
-    - Each player starts with 7 cards
-    - The remaing cards are placed face down
-    on the table to form the stockpile
-
+    def clear_screen(self):
         """
-    rules_pt2 = """
-    Playing the Game
-    ----------------
-    1. You start by requesting a card from the computer
-    2. If the computer has the card you requested, it will be added to
-    your hand and you get another turn
-    3. If the computer doesn't have the card you requested, you draw a card
-        from the stockpile
-    4. Now it's the computer's turn
+        Detect operating system and run relevant
+        clear screen command
+        """
+        # Linux & OSX
+        if os.name == "posix":
+            os.system("clear")
 
-    Game End
-    --------
-    The game ends when either:
-    - All 13 books have been won between the two players
-    - A player has an empty hand and there are no cards left in
-    the stockpile
+        # Windows
+        else:
+            os.system("cls")
 
-    """
-    print("-" * 80)
-    print(rules_pt1)
-    btn_top = "┌────────────────────────────┐\n"
-    btn_middle = "│ Press enter to continue... │\n"
-    btn_bottom = "└────────────────────────────┘"
-    input(btn_top + btn_middle + btn_bottom)
-    sleep(0.5)
-    clear_screen()
-    print(rules_pt2)
-    print("=" * 80)
-
-
-def game_instructions():
-    """
-    - Game instructions
-    """
-
-    instructions = """
-    INSTRUCTIONS
-    ------------
-
-    1. Enter your name
-    2. Enter the card you wish to request from the computer
-    3. For number ranks, you enter 2 to 10
-    4. For Jack, Queen, King & Ace, enter either the full name or
-    the first letter, e.g. Q or Queen
-    5. If you need to review the rules & instructions during the game,
-    enter either "H" or "Help"
-    6. After the game has ended, enter either:
-    - "Y" to play again or
-    - "N" to exit the game
+    def game_rules(self):
+        """
+        - Explain the game rules
         """
 
-    print(instructions)
-    print("-" * 80)
+        rules_pt1 = """
+        RULES OF THE GAME
+        -----------------
+
+        The Pack
+        --------
+        - The game is played using a 52-card pack
+
+        Object of the Game
+        ------------------
+        - The goal is to win the most books of cards
+        - A book is 4 cards of equal rank, eg.
+          3\u2660 3\u2663 3\u2665 3\u2666, J\u2660 J\u2663 J\u2665 J\u2666, etc
+
+        The Players
+        -----------
+        - In this version of Go Fish!, you are playing against the computer
+
+        The Deal
+        --------
+        - Each player starts with 7 cards
+        - The remaining cards are placed face down
+          on the table to form the stockpile
+
+        """
+
+        rules_pt2 = """
+        Playing the Game
+        ----------------
+        1. You start by requesting a card from the computer
+        2. If the computer has one or more of the card you requested, it will
+           be added to your hand and you get another turn
+        3. If the computer doesn't have the card(s) you requested, you draw a
+           card from the stockpile
+        4. Now it's the computer's turn
+
+        Game End
+        --------
+        The game ends when either:
+        - All 13 books have been won between the two players
+        - A player has an empty hand and there are no cards left in
+        the stockpile
+
+        """
+        print("-" * 80)
+        print(rules_pt1)
+        btn_top = "┌────────────────────────────┐\n"
+        btn_middle = "│ Press enter to continue... │\n"
+        btn_bottom = "└────────────────────────────┘"
+        input(btn_top + btn_middle + btn_bottom)
+        sleep(0.5)
+        GoFish().clear_screen()
+        print(rules_pt2)
+        print("=" * 80)
+
+    def game_instructions(self):
+        """
+        - Game instructions
+        """
+
+        instructions = """
+        INSTRUCTIONS
+        ------------
+
+        1. Enter your name
+        2. Enter the card you wish to request from the computer
+        3. For number ranks, you enter 2 to 10
+        4. For Jack, Queen, King & Ace, enter either the full name or
+        the first letter, e.g. Q or Queen
+        5. If you need to review the rules & instructions during the game,
+        enter either "H" or "Help"
+        6. After the game has ended, enter either:
+           - "Y" to play again or
+           - "N" to exit the game
+        """
+
+        print(instructions)
+        print("-" * 80)
 
 
 # Set global variables
@@ -308,7 +311,7 @@ def draw_from_stockpile():
     # Test output
     print("\n*** Function running: draw_from_stockpile() ***\n")
     
-    print(f"Drawing a card from the stockpile...")
+    print("Drawing a card from the stockpile...")
     selected_card = stockpile_list[0]
     human_hand.append(selected_card)
     stockpile_list.remove(selected_card)
@@ -479,26 +482,34 @@ def play_again():
 
 def main():
     """
-    Runs all program functions
+    - Runs the main program functions
     """
 
-    new_game()
-    game_rules()
-    play_game_round()
-    human_hand()
-    player_books()
-    stock_pile()
-    input_validation()
-    randomiser()
-    switch_player()
-    play_again()
+game = GoFish()
+
+
+game.clear_screen()
+game.game_rules()
+game.game_instructions()
+
+
+    # new_game()
+    # game_rules()
+    # play_game_round()
+    # human_hand()
+    # player_books()
+    # stock_pile()
+    # input_validation()
+    # randomiser()
+    # switch_player()
+    # play_again()
 
 
 # main()
 # new_game()
-build_deck()
-shuffle_deck()
-deal_cards()
+# build_deck()
+# shuffle_deck()
+# deal_cards()
 # switch_player()
-print(f"\n\nActive player: {active_player}")
-play_game_round()
+# print(f"\n\nActive player: {active_player}")
+# play_game_round()
