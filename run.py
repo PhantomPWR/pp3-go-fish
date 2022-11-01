@@ -49,7 +49,7 @@ def game_rules():
     on the table to form the stockpile
 
         """
-        rules_pt2 = """
+    rules_pt2 = """
     Playing the Game
     ----------------
     1. You start by requesting a card from the computer
@@ -113,6 +113,7 @@ stockpile_list = []
 books = []
 active_player = "human"
 opponent = "computer"
+human_requested_card = ""
 
 
 def new_game():
@@ -265,9 +266,6 @@ def deal_cards():
     print(*stockpile_list, end=" ")
        
 
-human_requested_card = ""
-
-
 def check_hand():
     """
     - Check hand for requested card otherwise
@@ -318,7 +316,6 @@ def draw_from_stockpile():
     check_for_books()
 
     # stock_pile()
-
 
 
 def play_game_round():
