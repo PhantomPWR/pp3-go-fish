@@ -252,7 +252,8 @@ def deal_cards():
         # Add remaing 38 cards to stockpile
         if deck_count == 38:
             stockpile_list.extend(shuffled_deck)
-
+    
+    human_hand.sort()
     # Test output
     # sleep(1)
     # print(f"\n------------------\nSelected card: {selected_card}\n------------------\n")
@@ -300,12 +301,14 @@ def check_hand():
         player_hand.extend(match)
         check_for_books()
     else:
-        print(f"The {opponent} doesn't have that card.")
+        print(f"\n=== The {opponent} doesn't have that card. ===\n")
         sleep(0.5)
         draw_from_stockpile()
 
     for card in match:
         opponent_hand.remove(card)
+
+    player_hand.sort()
             
     print(f"\n------------------------------------------------------------\n")
     print(f"Active player: {active_player}\n\n")
@@ -331,18 +334,18 @@ def draw_from_stockpile():
     # Test output
     print("\n*** Function running: draw_from_stockpile() ***\n")
     
-    print("Drawing a card from the stockpile...")
+    print("\n=== Drawing a card from the stockpile... ===\n")
     drawn_card = stockpile_list[0]
     
     if active_player == "human":
         human_hand.append(drawn_card)
-        print("Adding card to human hand")
+        print("\n=== Adding card to human hand ===\n")
     else:
         computer_hand.append(drawn_card)
-        print("Adding card to computer hand")
+        print("\n=== Adding card to computer hand ===\n")
 
     stockpile_list.remove(drawn_card)
-
+    
     check_for_books()
     switch_player()
 
@@ -367,6 +370,9 @@ def switch_player():
     # Test output
     print("\n*** Function running: switch_player() ***\n")
 
+    print("\n=== Checking for books ===\n")
+    check_for_books()
+
 
 def play_game_round():
     """
@@ -384,16 +390,27 @@ def play_game_round():
 
     global requested_card
     stock_pile()
+
+    # Test output
+    print("\n=== Sorting human hand ===\n")
+    human_hand.sort()
+
+    # Test output
+    print("\n=== Checking for books ===\n")
+    check_for_books()
+
     if active_player == "human":
         human_input = input("\nWhich card would you like to request? ")
         requested_card = human_input.upper()
         print(f"\nYou requested: {requested_card}")
     else:
-        random_card = random.choice(deck)
+        # random_card = random.choice(deck)
+        random_card = random.choice(computer_hand)
         requested_card = random_card[:1]
         print(f"The computer requested: {requested_card}")
         sleep(2)
 
+    # Test output
     check_hand()
 
 
@@ -438,13 +455,15 @@ def check_for_books():
     if active_player == "human":
         player_books = human_books
         player_hand = human_hand
-        print("Checking for human books")
-        print(f"Player hand is: {player_hand}")
+        print("\n=== Checking for human books ===\n")
+        print("Player hand is:", end=" ")
+        print(*player_hand)
     elif active_player == "computer":
         player_books = computer_books
         player_hand = computer_hand
-        print("Checking for computer books")
-        print(f"Player hand is: {player_hand}")
+        print("\n=== Checking for computer books ===\n")
+        print("Player hand is:", end=" ")
+        print(*player_hand)
 
     duplicate_ranks = [card for card in player_hand if requested_card in card]
 
@@ -461,6 +480,8 @@ def check_for_books():
             human_books += 1
         elif active_player == "computer":
             computer_books += 1
+
+    
     
     # sleep(0.5)
 
