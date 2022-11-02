@@ -529,16 +529,6 @@ def input_validation():
     print("\n*** Function running: input_validation() ***\n")
 
 
-def randomiser():
-    """
-    - Pick random card
-    - Check if card is available
-    """
-
-    # Test output
-    print("Function running: randomiser()")
-
-
 def game_end():
     """
     - Game ends when either player's hand AND
@@ -549,6 +539,49 @@ def game_end():
     print("\n*** Function running: game_end() ***\n")
 
     print("\n====== End of game ======\n")
+    
+    anounce_winner()
+    play_again()
+
+
+def anounce_winner():
+    """
+    - Display final scores
+    - Anounce the winner
+    """
+
+    global human_books
+    global computer_books
+
+    # Test input
+    # human_books = 6
+    # computer_books = 7
+    
+    # Display winner/draw message
+    if human_books > computer_books:
+        message = ("\n*** Congratulations - You are the winner! ***\n")
+    else:
+        message = ("\n   *** Sorry - you lost this one! ***\n")
+
+    # Display final scores
+    print("*" * 45)
+    print(message.upper())
+    print("\n--------------- FINAL SCORES ----------------\n")
+    print(f"    You: {human_books} books", end="        ")
+    print(f"Computer: {computer_books} books\n")
+    print("*" * 45)
+
+    # Ask to play again
+    play_again_input = input("\nDo you want to play again? Y/N ")
+
+    if play_again_input.upper() == "Y":
+        play_again()
+    else:
+        print("*** BYE! ***")
+        sleep(5)
+        quit()
+
+    
 
 
 def play_again():
@@ -559,6 +592,31 @@ def play_again():
 
     # Test output
     print("\n*** Function running: play_again() ***\n")
+
+    # TEMP CLEAR SCREEN
+    # Linux & OSX
+    if os.name == "posix":
+        os.system("clear")
+
+    # Windows
+    else:
+        os.system("cls")
+
+    global human_books
+    global computer_books
+    global deck
+    human_books = 0
+    computer_books = 0
+    deck = []
+
+    build_deck()
+    shuffle_deck()
+    deal_cards()
+    play_game_round()
+
+    
+
+
 
 
 def main():
@@ -585,8 +643,9 @@ def main():
 
 # main()
 # new_game()
+
 build_deck()
 shuffle_deck()
 deal_cards()
-# switch_player()
 play_game_round()
+# anounce_winner()
