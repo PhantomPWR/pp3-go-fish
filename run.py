@@ -141,8 +141,6 @@ computer_books = 0
 stockpile_list = []
 player_hand = []
 books = []
-active_player = "human"
-opponent = "computer"
 requested_card = ""
 book_check_trigger = ""
 
@@ -268,16 +266,17 @@ def deal_cards():
     # print(*stockpile_list, end=" ")
        
 
-def check_hand():
+def check_hand(active_player, opponent, requested_card, book_check_trigger):
     """
     - Check hand for requested card otherwise
       draw a card from the stockpile
     """
-    global book_check_trigger
-    book_check_trigger = requested_card
+    # global book_check_trigger
+    # book_check_trigger = requested_card
 
     # Test output
-    # print("\n*** Function running: check_hand() ***\n")
+    print("\n*** Function running: check_hand() ***\n")
+    print(f"\n====== book_check_trigger from check_hand(): {book_check_trigger}")
 
     if active_player == "human":
         player_hand = human_hand
@@ -301,85 +300,91 @@ def check_hand():
     if match:
         print(f"The {opponent} is handing over {len(match)} {singular_plural}.")
         player_hand.extend(match)
-        check_for_books()
+        check_for_books(active_player, book_check_trigger)
     else:
         print(f"\n=== The {opponent} doesn't have that card. ===\n")
         sleep(0.5)
-        draw_from_stockpile()
+        draw_from_stockpile(active_player, opponent)
 
     for card in match:
         opponent_hand.remove(card)
 
     player_hand.sort()
-            
-    print(f"\n------------------------------------------------------------\n")
-    print(f"Active player: {active_player}\n\n")
-    # print(f"Opponent: {opponent}\n\n")
-    print(f"Human hand:", end=" ")
-    print(*human_hand)
-    print(f"\nHuman books: {human_books}")
-    # print(f"\nComputer hand({len(computer_hand)}):", end=" ")
-    # print(*computer_hand)
-    print(f"\nComputer books: {computer_books}")
-    print(f"\n------------------------------------------------------------")
-    # print(f"\nStockpile({len(stockpile_list)}):\n")
-    # print(*stockpile_list, end=" ")
 
-    play_game_round()
+    # check_for_books(active_player, book_check_trigger)
+
+    # play_game_round(active_player, opponent, book_check_trigger)
+    play_game_round(active_player, opponent)
 
     
-def draw_from_stockpile():
+def draw_from_stockpile(active_player, opponent):
     """
     - Draw a card from the stockpile
     - Add card to active player's hand
     """
-
-    global book_check_trigger
 
     # Test output
     # print("\n*** Function running: draw_from_stockpile() ***\n")
     
     print("\n=== Drawing a card from the stockpile... ===\n")
     drawn_card = stockpile_list[0]
+    book_check_trigger = drawn_card[:1]
     
     if active_player == "human":
+        print(f"\n=== Human drew: {drawn_card}")
         human_hand.append(drawn_card)
         print("\n=== Adding card to human hand ===\n")
+        print(f"\n====== book_check_trigger from draw_from_stockpile(): {book_check_trigger}")
     else:
+        print(f"\n=== Computer drew: {drawn_card}")
         computer_hand.append(drawn_card)
         print("\n=== Adding card to computer hand ===\n")
+        print(f"\n====== book_check_trigger from draw_from_stockpile(): {book_check_trigger}")
 
-    stockpile_list.remove(drawn_card)
     
-    book_check_trigger = drawn_card[:1]
-    check_for_books()
-    switch_player()
+    if stockpile_list == [] and computer_hand == []:
+        game_end()
+    else:
+        stockpile_list.remove(drawn_card)
+    
+    # book_check_trigger = drawn_card[:1]
+    check_for_books(active_player, book_check_trigger)
+    switch_player(active_player, opponent)
 
 
-def switch_player():
+def switch_player(active_player, opponent):
     """
     Switch active player after turn has finished
     """
-    global active_player
-    global opponent
+    # global active_player
+    # global opponent
+
+    print(f"Active player (switch_player start):  {active_player}")
+
 
     if active_player == "human":
         active_player = "computer"
         opponent = "human"
         print("=== It is the computer's turn to play ===")
 
-    elif active_player == "computer":
+    # elif active_player == "computer":
+    else:
         active_player = "human"
         opponent = "computer"
         print("=== It is your turn to play ===")
 
+
     # Test output
     # print("\n*** Function running: switch_player() ***\n")
     # print("\n=== Checking for books ===\n")
-    check_for_books()
+
+    print(f"Active player (switch_player end):  {active_player}")
+    # play_game_round(active_player, opponent, book_check_trigger)
+    play_game_round(active_player, opponent)
+    
 
 
-def play_game_round():
+def play_game_round(active_player, opponent):
     """
     Keep track of:
      - Human hand
@@ -389,105 +394,100 @@ def play_game_round():
      - Stockpile
      - Card requests
      """
+    
+    # check_for_books(active_player, book_check_trigger)
 
     global requested_card
-    global book_check_trigger
     stock_pile()
+
+    print(f"\n------------------------------------------------------------\n")
+    print(f"Active player: {active_player}\n\n")
+    # print(f"Opponent: {opponent}\n\n")
+    print(f"Human hand:", end=" ")
+    print(*human_hand)
+    print(f"\n\n    Human books: {human_books}                     Computer books: {computer_books}")
+    # print(f"\nComputer hand({len(computer_hand)}):", end=" ")
+    # print(*computer_hand)
+    # print(f"\nComputer books: {computer_books}")
+    print(f"\n------------------------------------------------------------")
+    # print(f"\nStockpile({len(stockpile_list)}):\n")
+    # print(*stockpile_list, end=" ")
+
 
     # Group ranks together for readability
     human_hand.sort()
-
-    check_for_books()
 
     if active_player == "human":
         human_input = input("\nWhich card would you like to request? ")
         requested_card = human_input.upper()
         print(f"\nYou requested: {requested_card}")
-        # book_check_trigger = requested_card
+        book_check_trigger = requested_card
 
     else:
         if len(computer_hand) >= 1:
             random_card = random.choice(computer_hand)
         else:
             random_card = random.choice(deck)
-        requested_card = random_card[:1]
+        requested_card = random_card[:-1]
+        book_check_trigger = requested_card
         print(f"\nThe computer requested: {requested_card}\n")
         sleep(2)
-        # book_check_trigger = requested_card
 
-    book_check_trigger = requested_card
-    # Test output
-    # print(f"\n ====== book_check_trigger from play_game_round() outside if...else statement: {book_check_trigger} ======\n")
-
-    check_hand()
-
-
-def human_table():
-    """
-    - # Cards in hand
-    - Ranks & suits
-    - Contains books (4 of equal rank)?
-    """
-
-    print("\n*** Function running: human_table() ***\n")
-    print(f"Human hand: {human_hand}")
-
-
-def computer_table():
-    """
-    - # Cards in hand
-    - Ranks & suits
-    - Contains books (4 of equal rank)?
-    """
+    # book_check_trigger = requested_card
 
     # Test output
-    print("\n*** Function running: computer_table() ***\n")
-    print(f"Computer hand: {computer_hand}")
+    print(f"\n ====== book_check_trigger from play_game_round() outside if...else statement: {book_check_trigger} ======\n")
+
+    check_hand(active_player, opponent, requested_card, book_check_trigger)
+
+    check_for_books(active_player, book_check_trigger)
 
 
-def check_for_books():
+def check_for_books(active_player, book_check_trigger):
     """
     - Check if the active player has a book (4 of equal rank)
       after each round
     """
     
     # Test output
-    # print("\n*** Function running: check_for_books() ***\n")
+    print("\n*** Function running: check_for_books() ***\n")
+    print(f"Active player: {active_player}")
     # sleep(1)
     
     global player_hand
     global player_books
     global human_books
     global computer_books
-    global book_check_trigger
 
     if active_player == "human":
         player_books = human_books
         player_hand = human_hand
 
         # Test output
-        # print("\n=== Checking for human books ===\n")
-        # print("Player hand is:", end=" ")
-        # print(*player_hand)
+        print("\n=== Checking for human books ===\n")
+        print("Player hand is:", end=" ")
+        print(*player_hand)
+        print(f"\n=== Human book_check_trigger: {book_check_trigger} ===\n")
 
     elif active_player == "computer":
         player_books = computer_books
         player_hand = computer_hand
+        print(f"\n=== Computer book_check_trigger: {book_check_trigger} ===\n")
 
         # Test output
-        # print("\n=== Checking for computer books ===\n")
-        # print("Player hand is:", end=" ")
-        # print(*player_hand)
+        print("\n=== Checking for computer books ===\n")
+        print("Player hand is:", end=" ")
+        print(*player_hand)
 
     # Test output
-    # print(f"\n ====== book_check_trigger from check_for_books(): {book_check_trigger} ======\n")
+    print(f"\n ====== book_check_trigger from check_for_books(): {book_check_trigger} ======\n")
 
     duplicate_ranks = [card for card in player_hand if book_check_trigger in card]
 
     # Test output
-    # if duplicate_ranks:
-    #     print(f"Duplicates({len(duplicate_ranks)}):", end=" ")
-    #     print(*duplicate_ranks)
+    if duplicate_ranks:
+        print(f"Duplicates({len(duplicate_ranks)}):", end=" ")
+        print(*duplicate_ranks)
 
     if len(duplicate_ranks) == 4:
         
@@ -498,8 +498,7 @@ def check_for_books():
             human_books += 1
         elif active_player == "computer":
             computer_books += 1
-
-    
+    return
     
     # sleep(0.5)
 
@@ -612,7 +611,7 @@ def play_again():
     build_deck()
     shuffle_deck()
     deal_cards()
-    play_game_round()
+    play_game_round(active_player, opponent)
 
     
 
@@ -644,8 +643,12 @@ def main():
 # main()
 # new_game()
 
+active_player = "human"
+opponent = "computer"
+
 build_deck()
 shuffle_deck()
 deal_cards()
-play_game_round()
+# play_game_round(active_player, opponent, book_check_trigger)
+play_game_round(active_player, opponent)
 # anounce_winner()
