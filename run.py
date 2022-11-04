@@ -133,7 +133,7 @@ class GoFish:
 
 
 # Set global variables
-deck = []
+# deck = []
 human_hand = []
 human_books = 0
 computer_hand = []
@@ -162,69 +162,32 @@ def build_deck():
         "A", "2", "3", "4", "5", "6", "7",
         "8", "9", "10", "J", "Q", "K"
     ]
-
+    original_deck = []
     for suit in suit_list:
         for rank in rank_list:
-            deck.append(rank + suit)
+            original_deck.append(rank + suit)
+    
     # Test output
-    # print(f"\nOriginal deck:\n {deck}")
+    print("\nOriginal deck:")
+    print(*original_deck)
 
-
-def shuffle_deck():
-    """
-    - Shuffle the deck
-    """
-    global shuffled_deck
+    # Shuffle the deck
     shuffled_deck = []
-    random.shuffle(deck)
+    random.shuffle(original_deck)
 
-    for card in deck:
+    for card in original_deck:
         shuffled_deck.append(card)
 
     # Test output
-    # print(f"\nShuffled deck:\n {shuffled_deck}")
-    return shuffled_deck
+    print("\nShuffled deck:")
+    print(*shuffled_deck)
+
+    # deck_count = len(shuffled_deck)
+
+    deal_cards(shuffled_deck)
 
 
-def deck_card_count():
-    """
-    - Count the amount of cards in the shuffled deck
-    """
-    global deck_count
-    deck_count = len(shuffled_deck)
-
-
-def select_card_from_deck():
-    """
-    - Select card from shuffled deck
-    """
-    global card_to_deal
-    card_to_deal = shuffled_deck[0]
-
-    return card_to_deal
-
-
-def add_card_to_hand():
-    """
-    - Add card to hand
-    """
-
-    deck_card_count()
-
-    if deck_count % 2 != 1:
-        human_hand.append(card_to_deal)
-    else:
-        computer_hand.append(card_to_deal)
-
-
-def remove_card_from_deck():
-    """
-    - Remove selected card from shuffled deck
-    """
-    shuffled_deck.remove(card_to_deal)
-
-
-def deal_cards():
+def deal_cards(shuffled_deck):
     """
     - Add 7 cards to computer's hand
     - Add 7 cards to player's hand
@@ -232,21 +195,109 @@ def deal_cards():
     """
     
     # Test output
-    # print("\n*** Function running: deal_cards() ***\n")
+    print("\n*** Function running: deal_cards() ***\n")
 
     global stockpile_list
-    deck_card_count()
+    global player_hand
+    # deck_card_count()
+    deck_count = len(shuffled_deck)
+    # deck_count = 52
+    # Test output
+    # print(f"\nDeck count: {deck_count}\n")
+
+    # Select card to deal from deck
+    card_to_deal = shuffled_deck[0]
+
+    # Test output
+    print(f"\ncard_to_deal before while loop: {card_to_deal}\n")
+    # player_hand = []
+
+    # while deck_count >= 38:
+    while len(player_hand) <= 7:
+        for card_to_deal in shuffled_deck:
+            deck_count = len(shuffled_deck)
+            card_to_deal = shuffled_deck[0]
+
+            if deck_count % 2 != 1:
+                player_hand = computer_hand
+
+                # Test output
+                player = "Computer"
+
+            else:
+                player_hand = human_hand
+
+                # Test output
+                player = "Human"
+
+            if card_to_deal not in player_hand:
+                player_hand.append(card_to_deal)
+                shuffled_deck.remove(card_to_deal)
+
+                # Test output
+                print(f"\nCard to deal: {card_to_deal}\n")
+                print(f"\nDeck count: {deck_count}\n")
+                print(f"\nShuffled deck({deck_count}): {shuffled_deck}\n")
+                print(f"\n{player} hand({len(player_hand)}): {player_hand}\n")
+
+                # deck_count = len(shuffled_deck)
+                # Test output
+                # print(f"\nDeck count: {deck_count}\n")
+
+            # while deck_count != 38:
+            #     if card_to_deal not in human_hand:
+            #         human_hand.append(card_to_deal)
+            #         shuffled_deck.remove(card_to_deal)
+
+            #     # Test output
+            #     print(f"\nDeck count: {deck_count}\n")
+            #     print(f"\nShuffled deck({deck_count}): {shuffled_deck}\n")
+            #     print(f"\nHuman hand: {human_hand}\n")
+    # Test output
+    print(f"\nDeck count after while loop: {deck_count}\n")
+
+    # Add remaing 38 cards to stockpile
+    if deck_count == 38:
+        stockpile_list.extend(shuffled_deck)
+
+        # Test output
+        print(f"\nStockpile: {deck_count}\n")
+
 
     # Deal player hands
-    while deck_count != 38:
-        select_card_from_deck()
-        add_card_to_hand()
-        remove_card_from_deck()
-        deck_card_count()
+    # while deck_count != 38:
+    #     # deck_count = len(shuffled_deck)
+    #     # select_card_from_deck()
+    #     # add_card_to_hand()
+
+    #     # for card_to_deal in shuffled_deck:
+    #         # card_to_deal = shuffled_deck[0]
+
+    #     if deck_count % 2 != 1:
+    #         human_hand.append(card_to_deal)
+    #         # Test output
+    #         print(f"\nHuman hand: {human_hand}\n")
+    #         # shuffled_deck.remove(card_to_deal)
+            
+    #     else:
+    #         computer_hand.append(card_to_deal)
+    #         # Test output
+    #         print(f"\nComputer hand: {computer_hand}\n")
+    #         # shuffled_deck.remove(card_to_deal)
+
+
+    #     # remove_card_from_deck()
+
+    #     shuffled_deck.remove(card_to_deal)
+    #     deck_count = len(shuffled_deck)
+        # # Test output
+        # print(f"\nShuffled deck({deck_count}): {shuffled_deck}\n")
+
+        # deck_card_count()
 
         # Add remaing 38 cards to stockpile
-        if deck_count == 38:
-            stockpile_list.extend(shuffled_deck)
+        # if deck_count == 38:
+        # stockpile_list.extend(shuffled_deck)
     
     # Group ranks together for readability
     human_hand.sort()
@@ -647,8 +698,8 @@ active_player = "human"
 opponent = "computer"
 
 build_deck()
-shuffle_deck()
-deal_cards()
+# shuffle_deck()
+# deal_cards(shuffled_deck)
 # play_game_round(active_player, opponent, book_check_trigger)
 play_game_round(active_player, opponent)
 # anounce_winner()
