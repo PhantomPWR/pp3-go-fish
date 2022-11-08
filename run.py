@@ -154,6 +154,9 @@ class GoFish:
         - Start the game once the human player is ready
         """
 
+        # Test output
+        print("\n*** Function running: game_start()")
+
         start_game_input = input("When your're ready to play, press <ENTER>:\n")
         if start_game_input == "":
             self.build_deck()
@@ -267,20 +270,21 @@ class GoFish:
                              human_hand, computer_hand,
                              human_books, computer_books)
 
-    def draw_from_stockpile(self, active_player, opponent, stockpile_list):
+    def draw_from_stockpile(self, active_player, opponent, stockpile_list, human_books, computer_books):
         """
         - Draw a card from the stockpile
         - Add card to active player's hand
         """
+        
+        self.human_books = human_books
+        self.computer_books = computer_books
 
         # Test output
-        # print("\n*** Function running: draw_from_stockpile() ***\n")
-
-        # Test output
+        print("\n*** Function running: draw_from_stockpile() ***\n")
         print(f"stockpile_list: {stockpile_list}")
 
         print("\n=== Drawing a card from the stockpile... ===\n")
-        if stockpile_list == [] and player_hand == []:
+        if self.stockpile_list == [] and self.player_hand == []:
             self.game_end()
         else:
             drawn_card = stockpile_list[0]
@@ -301,79 +305,19 @@ class GoFish:
             print("\n=== Adding card to computer hand ===\n")
             print(f"\n====== book_check_trigger from draw_from_stockpile(): {book_check_trigger}")
     
-        if stockpile_list == [] and player_hand == []:
+        if stockpile_list == [] and self.player_hand == []:
             self.game_end()
         else:
             stockpile_list.remove(drawn_card)
         
-        # book_check_trigger = drawn_card[:1]
         self.check_for_books(active_player, book_check_trigger)
-        self.switch_player(active_player, opponent)
+        # self.switch_player(active_player, opponent)
+        self.switch_player(active_player, opponent, human_books, computer_books)
 
-    def check_hand(self, active_player, opponent, requested_card, 
-                   book_check_trigger):
-        """
-        - Check hand for requested card otherwise
-        draw a card from the stockpile
-        """
-        
-        human_hand = self.human_hand
-        computer_hand = self.computer_hand
-        human_books = self.human_books
-        computer_books = self.computer_books
-
-        # Test output
-        print("\n*** Function running: check_hand() ***\n")
-        print(f"\n====== book_check_trigger from check_hand(): {book_check_trigger}")
-
-        stockpile_list = self.stockpile_list
-
-        if active_player == "human":
-            self.player_hand = self.human_hand
-            self.opponent_hand = self.computer_hand
-        else:
-            self.player_hand = self.computer_hand
-            self.opponent_hand = self.human_hand
-        
-        match = [card for card in self.opponent_hand if requested_card in card]
-
-        # Test output
-        # print("\nMatch:", end=" ")
-        # print(*match)
-
-        singular_plural = ""
-        if len(match) == 1:
-            singular_plural = "card"
-        else:
-            singular_plural = "cards"
-
-        if match:
-            print(f"The {opponent} is handing over {len(match)} {singular_plural}.")
-            self.player_hand.extend(match)
-            self.check_for_books(active_player, book_check_trigger)
-        else:
-            print(f"\n=== The {opponent} doesn't have that card. ===\n")
-            sleep(0.5)
-            self.draw_from_stockpile(active_player, opponent, stockpile_list)
-
-        for card in match:
-            self.opponent_hand.remove(card)
-
-        self.player_hand.sort()
-
-        # check_for_books(active_player, book_check_trigger)
-
-        # play_game_round(active_player, opponent, book_check_trigger)
-        self.play_game_round(active_player, opponent, stockpile_list,
-                             human_hand, computer_hand,
-                             human_books, computer_books)
-
-    def switch_player(self, active_player, opponent):
+    def switch_player(self, active_player, opponent, human_books, computer_books):
         """
         Switch active player after turn has finished
         """
-        # global active_player
-        # global opponent
 
         print(f"Active player (switch_player start):  {active_player}")
 
@@ -383,43 +327,31 @@ class GoFish:
         human_books = self.human_books
         computer_books = self.computer_books
 
+        # Test output
+        print("*** switch_player START\n")
+        print(f"Human books: {self.human_books}")
+        print(f"Computer books: {self.computer_books}\n")
+
         if active_player == "human":
             active_player = "computer"
             opponent = "human"
             print("=== It is the computer's turn to play ===")
 
-        # elif active_player == "computer":
         else:
             active_player = "human"
             opponent = "computer"
             print("=== It is your turn to play ===")
 
-        # # Display scoreboard
-
-        # print("\n------------------------------------------------------------\n")
-        # print(f"Active player: {active_player}\n\n")
-        # # print(f"Opponent: {opponent}\n\n")
-        # print("Human hand:", end=" ")
-        # print(*self.human_hand)
-        # print(f"\n\n    Human books: {self.human_books}                     Computer books: {self.computer_books}")
-        # # print(f"\nComputer hand({len(computer_hand)}):", end=" ")
-        # # print(*computer_hand)
-        # # print(f"\nComputer books: {computer_books}")
-        # print("\n------------------------------------------------------------")
-        # # print(f"\nStockpile({len(stockpile_list)}):\n")
-        # # print(*stockpile_list, end=" ")
-
-
         # Test output
-        # print("\n*** Function running: switch_player() ***\n")
-        # print("\n=== Checking for books ===\n")
-
         print(f"Active player (switch_player end):  {active_player}")
-        # play_game_round(active_player, opponent, book_check_trigger)
-        self.play_game_round(active_player, opponent, stockpile_list, human_hand, computer_hand, human_books, computer_books)
+
+        self.play_game_round(active_player, opponent, stockpile_list,
+                             human_hand, computer_hand,
+                             human_books, computer_books)
 
     def play_game_round(self, active_player, opponent, stockpile_list,
-                        human_hand, computer_hand, human_books, computer_books):
+                        human_hand, computer_hand,
+                        human_books, computer_books):
         """
         Keep track of:
         - Human hand
@@ -429,27 +361,27 @@ class GoFish:
         - Stockpile
         - Card requests
         """
-        
-        # check_for_books(active_player, book_check_trigger)
 
-        # global requested_card
-        
-        # self.score_board(active_player, human_hand, human_books, computer_books)
+        # self.human_books = human_books
+        # self.computer_books = computer_books
+
+        # Test output
+        print("*** play_game_round START\n")
+        print(f"Human books: {self.human_books}")
+        print(f"Computer books: {self.computer_books}\n")
+
 
         # Display scoreboard
 
+        # Test output
+        print("*** Scoreboard at play_game_round START\n")
+
         print("\n------------------------------------------------------------\n")
         print(f"Active player: {active_player}\n\n")
-        # print(f"Opponent: {opponent}\n\n")
         print("Human hand:", end=" ")
         print(*self.human_hand)
-        print(f"\n\n    Human books: {human_books}                     Computer books: {computer_books}")
-        # print(f"\nComputer hand({len(computer_hand)}):", end=" ")
-        # print(*computer_hand)
-        # print(f"\nComputer books: {computer_books}")
+        print(f"\n\n    Human books: {self.human_books}                     Computer books: {self.computer_books}")
         print("\n------------------------------------------------------------")
-        # print(f"\nStockpile({len(stockpile_list)}):\n")
-        # print(*stockpile_list, end=" ")
 
         # Group ranks together for readability
         self.human_hand.sort()
@@ -479,20 +411,88 @@ class GoFish:
 
         print("\n------------------------------------------------------------\n")
         print(f"Active player: {active_player}\n\n")
-        # print(f"Opponent: {opponent}\n\n")
         print("Human hand:", end=" ")
         print(*self.human_hand)
         print(f"\n\n    Human books: {self.human_books}                     Computer books: {self.computer_books}")
-        # print(f"\nComputer hand({len(computer_hand)}):", end=" ")
-        # print(*computer_hand)
-        # print(f"\nComputer books: {computer_books}")
         print("\n------------------------------------------------------------")
-        # print(f"\nStockpile({len(stockpile_list)}):\n")
-        # print(*stockpile_list, end=" ")
 
-        self.check_hand(active_player, opponent, requested_card, book_check_trigger)
+        self.check_hand(active_player, opponent,
+                        requested_card, book_check_trigger)
 
         self.check_for_books(active_player, book_check_trigger)
+
+        # Display scoreboard
+
+        # Test output
+        print("*** Scoreboard at play_game_round END\n")
+
+        print("\n------------------------------------------------------------\n")
+        print(f"Active player: {active_player}\n\n")
+        print("Human hand:", end=" ")
+        print(*self.human_hand)
+        print(f"\n\n    Human books: {human_books}                     Computer books: {computer_books}")
+        print("\n------------------------------------------------------------")
+
+    def check_hand(self, active_player, opponent, requested_card, 
+                   book_check_trigger):
+        """
+        - Check hand for requested card otherwise
+        draw a card from the stockpile
+        """
+        
+        human_hand = self.human_hand
+        computer_hand = self.computer_hand
+        human_books = self.human_books
+        computer_books = self.computer_books
+
+        # Test output
+        print("\n*** Function running: check_hand() ***\n")
+        print(f"\n====== book_check_trigger from check_hand(): {book_check_trigger}")
+        print("\n*** check_hand START\n")
+        print(f"Human books: {self.human_books}")
+        print(f"Computer books: {self.computer_books}\n")
+
+        stockpile_list = self.stockpile_list
+
+        if active_player == "human":
+            self.player_hand = self.human_hand
+            self.opponent_hand = self.computer_hand
+        else:
+            self.player_hand = self.computer_hand
+            self.opponent_hand = self.human_hand
+        
+        match = [card for card in self.opponent_hand if requested_card in card]
+
+        singular_plural = ""
+        if len(match) == 1:
+            singular_plural = "card"
+        else:
+            singular_plural = "cards"
+
+        if match:
+            print(f"The {opponent} is handing over {len(match)} {singular_plural}.")
+            self.player_hand.extend(match)
+            self.check_for_books(active_player, book_check_trigger)
+        else:
+            print(f"\n=== The {opponent} doesn't have that card. ===\n")
+            sleep(0.5)
+            # self.draw_from_stockpile(active_player, opponent, stockpile_list)
+            self.draw_from_stockpile(active_player, opponent, stockpile_list,
+                                     human_books, computer_books)
+
+        for card in match:
+            self.opponent_hand.remove(card)
+
+        self.player_hand.sort()
+
+        # Test output
+        print("*** check_hand END\n")
+        print(f"Human books: {self.human_books}")
+        print(f"Computer books: {self.computer_books}\n")
+
+        self.play_game_round(active_player, opponent, stockpile_list,
+                             human_hand, computer_hand,
+                             human_books, computer_books)
 
     def check_for_books(self, active_player, book_check_trigger):
         """
@@ -501,17 +501,17 @@ class GoFish:
         """
         
         # Test output
-        print("\n*** Function running: check_for_books() ***\n")
+        print("\n*** Function running: check_for_books() START***\n")
         print(f"Active player: {active_player}")
         # sleep(1)
 
-        # player_books = self.player_books
-        human_hand = self.human_hand
+        player_books = self.player_books
+        # human_hand = self.human_hand
         human_books = self.human_books
         computer_books = self.computer_books
 
         if active_player == "human":
-            # player_books = self.human_books
+            player_books = self.human_books
             player_hand = self.human_hand
 
             # Test output
@@ -520,10 +520,8 @@ class GoFish:
             print(*player_hand)
             print(f"\n=== Human book_check_trigger: {book_check_trigger} ===\n")
 
-            # return player_hand, player_books
-
         elif active_player == "computer":
-            # player_books = self.computer_books
+            player_books = self.computer_books
             player_hand = self.computer_hand
             print(f"\n=== Computer book_check_trigger: {book_check_trigger} ===\n")
 
@@ -531,8 +529,6 @@ class GoFish:
             print("\n=== Checking for computer books ===\n")
             print("Player hand is:", end=" ")
             print(self.player_hand)
-
-            # return player_hand, player_books
 
         # Test output
         print(f"\n ====== book_check_trigger from check_for_books(): {self.book_check_trigger} ======\n")
@@ -555,26 +551,21 @@ class GoFish:
 
                 # Test output
                 print(f"\n*** Human books: {human_books}\n")
-                # self.score_board(active_player, human_hand,
-                #                  human_books, computer_books)
-
-                # return human_books
-                # return
 
             elif active_player == "computer":
                 computer_books += 1
 
                 # Test output
                 print(f"\n*** Computer books: {computer_books}\n")
-                # self.score_board(active_player, human_hand,
-                #                  human_books, computer_books)
 
-                # return computer_books
-                # return
+        # Test output
+        print("\n*** Function running: check_for_books() END***\n")
+        print(f"*** Human books: {human_books}\n")
+        print(f"*** Computer books: {computer_books}\n")
 
         if human_books + computer_books == 13:
             self.game_end()
-        # return
+        return self.human_books, self.computer_books
         # sleep(0.5)
 
     def score_board(self, active_player, human_hand,
@@ -607,10 +598,10 @@ class GoFish:
         """
         
         # Test output
-        # print("\n*** Function running: stock_pile() ***\n")
+        print("\n*** Function running: stock_pile() ***\n")
 
-        if stockpile_list == [] and computer_hand == []:
-            game_end()
+        if self.stockpile_list == [] and self.computer_hand == []:
+            self.game_end()
 
     def input_validation(self):
         """
@@ -634,8 +625,8 @@ class GoFish:
 
         print("\n====== End of game ======\n")
         
-        anounce_winner()
-        play_again()
+        self.anounce_winner()
+        self.play_again()
 
     def anounce_winner(self):
         """
@@ -670,7 +661,7 @@ class GoFish:
         if play_again_input.upper() == "Y":
             human_books = 0
             computer_books = 0
-            play_again()
+            self.play_again()
         else:
             print("*** BYE! ***")
             sleep(5)
@@ -694,14 +685,33 @@ class GoFish:
         else:
             os.system("cls")
 
-        human_hand.clear()
-        computer_hand.clear()
+        self.human_hand.clear()
+        self.computer_hand.clear()
 
-        build_deck()
+        self.build_deck()
         # deal_cards()
         # play_game_round(active_player, opponent, stockpile_list)
 
 
+def main():
+    """
+    - Runs the main program functions
+    """
+    game = GoFish()
+    game.new_game()
+
+# Function trace
+# def tracefunc(frame, event, arg, indent=[0]):
+#       if event == "call":
+#           indent[0] += 2
+#           print("-" * indent[0] + "> call function", frame.f_code.co_name)
+#       elif event == "return":
+#           print("<" + "-" * indent[0], "exit function", frame.f_code.co_name)
+#           indent[0] -= 2
+#       return tracefunc
+# import sys
+# sys.setprofile(tracefunc)
+main()
 
 
 # Set global variables
@@ -1161,20 +1171,3 @@ class GoFish:
     # build_deck()
     # # deal_cards()
     # # play_game_round(active_player, opponent, stockpile_list)
-
-
-def main():
-    """
-    - Runs the main program functions
-    """
-
-    
-    # active_player = "human"
-    # opponent = "computer"
-
-    game = GoFish()
-    game.new_game()
-    # game.deal_cards("human", shuffled_deck)
-
-
-main()
