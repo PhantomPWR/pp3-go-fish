@@ -23,7 +23,7 @@ class GoFish:
         self.requested_card = ""
         self.book_check_trigger = ""
         self.active_player = ""
-        self.opponent = ""
+        # self.opponent = ""
 
     def clear_screen(self):
         """
@@ -43,59 +43,48 @@ class GoFish:
         - Explain the game rules
         """
 
-        rules_pt1 = """
-        RULES OF THE GAME
-        -----------------
+        rules = """
+    RULES OF GO FISH!
+    -----------------
 
-        The Pack
-        --------
-        - The game is played using a 52-card pack
+    The Pack
+    --------
+    - The game is played using a 52-card pack
 
-        Object of the Game
-        ------------------
-        - The goal is to win the most books of cards
-        - A book is 4 cards of equal rank, eg.
-          3\u2660 3\u2663 3\u2665 3\u2666, J\u2660 J\u2663 J\u2665 J\u2666, etc
+    Object of the Game
+    ------------------
+    - The goal is to win the most books of cards
+    - A book is 4 cards of equal rank, eg.
+        3\u2660 3\u2663 3\u2665 3\u2666, J\u2660 J\u2663 J\u2665 J\u2666, etc
 
-        The Players
-        -----------
-        - In this version of Go Fish!, you are playing against the computer
+    The Players
+    -----------
+    - In this version of Go Fish!, you are playing against the computer
 
-        The Deal
-        --------
-        - Each player starts with 7 cards
-        - The remaining cards are placed face down
-          on the table to form the stockpile
+    The Deal
+    --------
+    - Each player starts with 7 cards
+    - The remaining cards are placed face down
+        on the table to form the stockpile
 
-        """
+    Playing the Game
+    ----------------
+    1. You start by requesting a card from the computer
+    2. If the computer has one or more of the card you requested, it will
+        be added to your hand and you get another turn
+    3. If the computer doesn't have the card(s) you requested, you draw a
+        card from the stockpile
+    4. Now it's the computer's turn
 
-        rules_pt2 = """
-        Playing the Game
-        ----------------
-        1. You start by requesting a card from the computer
-        2. If the computer has one or more of the card you requested, it will
-           be added to your hand and you get another turn
-        3. If the computer doesn't have the card(s) you requested, you draw a
-           card from the stockpile
-        4. Now it's the computer's turn
-
-        Game End
-        --------
-        The game ends when either:
-        - All 13 books have been won between the two players
-        - A player has an empty hand and there are no cards left in
-        the stockpile
+    Game End
+    --------
+    The game ends when either:
+    - All 13 books have been won between the two players
+    - A player has an empty hand and there are no cards left in
+    the stockpile
 
         """
-        print("-" * 80)
-        print(rules_pt1)
-        btn_top = "┌────────────────────────────┐\n"
-        btn_middle = "│ Press enter to continue... │\n"
-        btn_bottom = "└────────────────────────────┘"
-        input(btn_top + btn_middle + btn_bottom)
-        sleep(0.5)
-        GoFish().clear_screen()
-        print(rules_pt2)
+        print(rules)
         print("=" * 80)
 
     def game_instructions(self):
@@ -105,19 +94,19 @@ class GoFish:
         """
 
         instructions = """
-        INSTRUCTIONS
-        ------------
+    INSTRUCTIONS
+    ------------
 
-        1. Enter your name
-        2. Enter the card you wish to request from the computer
-        3. For number ranks, you enter 2 to 10
-        4. For Jack, Queen, King & Ace, enter either the full name or
-        the first letter, e.g. Q or Queen
-        5. If you need to review the rules & instructions during the game,
-        enter either "H" or "Help"
-        6. After the game has ended, enter either:
-           - "Y" to play again or
-           - "N" to exit the game
+    1. Enter your name
+    2. Enter the card you wish to request from the computer
+    3. For number ranks, you enter 2 to 10
+    4. For Jack, Queen, King & Ace, enter either the full name or
+    the first letter, e.g. Q or Queen
+    5. If you need to review the rules & instructions during the game,
+    enter either "H" or "Help"
+    6. After the game has ended, enter either:
+        - "Y" to play again or
+        - "N" to exit the game
         """
 
         print(instructions)
@@ -135,10 +124,7 @@ class GoFish:
         sleep(0.5)
         print("Go Fish!")
         print("\u2588")
-        btn_top = "┌───────────────────────────────┐\n"
-        btn_middle = "│ Press enter for game rules... │\n"
-        btn_bottom = "└───────────────────────────────┘"
-        input(btn_top + btn_middle + btn_bottom)
+        input("Press <enter> for the game rules & instructions...")
 
         self.clear_screen()
         self.game_rules()
@@ -234,14 +220,8 @@ class GoFish:
         computer_books = self.computer_books
         book_check_trigger = random.choice(self.player_hand)
         
-        # self.check_for_books(active_player, book_check_trigger, human_books, computer_books)
-        # Check for books, in case a player was dealt
-        # 4 cards of equal rank
         self.check_for_books(active_player, book_check_trigger)
 
-        # self.play_game_round(active_player, opponent, stockpile_list,
-        #                      human_hand, computer_hand,
-        #                      human_books, computer_books)
         self.play_game_round(active_player, opponent,
                              human_books, computer_books)
 
@@ -254,53 +234,46 @@ class GoFish:
         
         self.human_books = human_books
         self.computer_books = computer_books
-
-        # Test output
-        print("\n*** Function running: draw_from_stockpile() ***\n")
-        print(f"stockpile_list: {stockpile_list}")
-
+        
+        self.score_board(active_player)
         print("\n=== Drawing a card from the stockpile... ===\n")
-        if self.stockpile_list == [] and self.player_hand == []:
+        if not self.stockpile_list and not self.player_hand:
             self.game_end()
         else:
             drawn_card = stockpile_list[0]
 
-        # Test output
-        print(f"Card drawn from stockpile: {drawn_card}")
-
+        # Use the drawn card's rank to trigger 
+        #  checking for books
         book_check_trigger = drawn_card[:1]
         
         if active_player == "human":
-            print(f"\n=== Human drew: {drawn_card}")
+            print(f"\n=== You drew a {drawn_card} from the stockpile.")
+            sleep(2)
             self.human_hand.append(drawn_card)
-            print("\n=== Adding card to human hand ===\n")
-            print(f"\n====== book_check_trigger from draw_from_stockpile(): {book_check_trigger}")
+            print(f"\n=== Adding {drawn_card} to your hand ===\n")
+            sleep(2)
+
         else:
-            print(f"\n=== Computer drew: {drawn_card}")
+            print("\n=== The computer drew a card from the stockpile")
+            sleep(2)
             self.computer_hand.append(drawn_card)
-            print("\n=== Adding card to computer hand ===\n")
-            print(f"\n====== book_check_trigger from draw_from_stockpile(): {book_check_trigger}")
+            print("\n=== Adding card to the computer's hand ===\n")
+            sleep(2)
     
         # End the game if both the stockpile and a player's hand are empty
-        if stockpile_list == [] and self.player_hand == []:
+        if stockpile_list == [] and not self.player_hand:
             self.game_end()
         else:
             stockpile_list.remove(drawn_card)
         
-        # self.check_for_books(active_player, book_check_trigger, human_books, computer_books)
         self.check_for_books(active_player, book_check_trigger)
-        self.switch_player(active_player, opponent)
+        self.switch_player(active_player)
 
-    def switch_player(self, active_player, opponent):
+    def switch_player(self, active_player):
         """
         Switch active player after turn has finished
         """
 
-        print(f"Active player (switch_player start):  {active_player}")
-
-        # stockpile_list = self.stockpile_list
-        # human_hand = self.human_hand
-        # computer_hand = self.computer_hand
         human_books = self.human_books
         computer_books = self.computer_books
 
@@ -308,24 +281,17 @@ class GoFish:
             active_player = "computer"
             opponent = "human"
             print("=== It is the computer's turn to play ===")
+            sleep(1.5)
 
         else:
             active_player = "human"
             opponent = "computer"
             print("=== It is your turn to play ===")
+            sleep(1.5)
 
-        # Test output
-        print(f"Active player (switch_player end):  {active_player}")
-
-        # self.play_game_round(active_player, opponent, stockpile_list,
-        #                      human_hand, computer_hand,
-        #                      human_books, computer_books)
         self.play_game_round(active_player, opponent,
                              human_books, computer_books)
 
-    # def play_game_round(self, active_player, opponent, stockpile_list,
-    #                     human_hand, computer_hand,
-    #                     human_books, computer_books):
     def play_game_round(self, active_player, opponent,
                         human_books, computer_books):
         """
@@ -338,15 +304,6 @@ class GoFish:
         - Card requests
         """
 
-        # self.human_books = human_books
-        # self.computer_books = computer_books
-
-        # Test output
-        print("*** play_game_round START\n")
-        print(f"Human books: {self.human_books}")
-        print(f"Computer books: {self.computer_books}\n")
-
-
         # Display scoreboard
         self.score_board(active_player)
 
@@ -354,10 +311,19 @@ class GoFish:
         self.human_hand.sort()
 
         if active_player == "human":
-            human_input = input("\nWhich card would you like to request? ")
-            requested_card = human_input.upper()
-            print(f"\nYou requested: {requested_card}")
-            book_check_trigger = requested_card
+            human_input = input("\nWhich card would you like to ask for? ")
+            requested_card = human_input.capitalize()
+            if requested_card == "H":
+                self.game_rules()
+                self.game_instructions()
+                input("Press <enter> to continue...")
+                self.play_game_round(active_player, opponent,
+                                     human_books, computer_books)
+            else:
+                self.input_validation(requested_card)
+                print(f"\nYou asked for {requested_card}s")
+                sleep(1)
+                book_check_trigger = requested_card
 
         else:
             if len(self.computer_hand) >= 1:
@@ -366,7 +332,7 @@ class GoFish:
                 random_card = str(random.choice([2, 10]))
             requested_card = random_card[:-1]
             book_check_trigger = requested_card
-            print(f"\nThe computer requested: {requested_card}\n")
+            print(f"\nThe computer asked for {requested_card}s\n")
             sleep(2)
 
         book_check_trigger = requested_card
@@ -383,9 +349,7 @@ class GoFish:
         - Check hand for requested card otherwise
         draw a card from the stockpile
         """
-        
-        # human_hand = self.human_hand
-        # computer_hand = self.computer_hand
+
         human_books = self.human_books
         computer_books = self.computer_books
 
@@ -399,22 +363,36 @@ class GoFish:
             self.opponent_hand = self.human_hand
         
         match = [card for card in self.opponent_hand if requested_card in card]
-
-        singular_plural = ""
-        if len(match) == 1:
-            singular_plural = "card"
+        
+        # Handle message grammar
+        plural = ""
+        singular = ""
+        card_count = ""
+        if len(match) > 1:
+            plural = "s"
+            singular = ""
+            card_count = str(len(match))
         else:
-            singular_plural = "cards"
+            singular = "one"
+            plural = ""
+            card_count = ""
 
         if match:
-            print(f"The {opponent} is handing over {len(match)} {singular_plural}.")
+            if active_player == "computer":
+                print(f"You are handing over {singular}{card_count} {book_check_trigger}{plural}.")
+            
+            else:
+                print(f"The computer is handing over {singular}{card_count} {book_check_trigger}{plural}.")
+            sleep(3)
             self.player_hand.extend(match)
-            # self.check_for_books(active_player, book_check_trigger, human_books, computer_books)
             self.check_for_books(active_player, book_check_trigger)
         else:
-            print(f"\n=== The {opponent} doesn't have that card. ===\n")
-            sleep(0.5)
-            # self.draw_from_stockpile(active_player, opponent, stockpile_list)
+            if active_player == "computer":
+                print(f"\n=== You don't have any {book_check_trigger}s. ===\n")
+            else:
+                print(f"\n=== The computer doesn't have any {book_check_trigger}s. ===\n")
+            sleep(3)
+
             self.draw_from_stockpile(active_player, opponent, stockpile_list,
                                      human_books, computer_books)
 
@@ -423,9 +401,6 @@ class GoFish:
 
         self.player_hand.sort()
 
-        # self.play_game_round(active_player, opponent, stockpile_list,
-        #                      human_hand, computer_hand,
-        #                      human_books, computer_books)
         self.play_game_round(active_player, opponent,
                              human_books, computer_books)
 
@@ -434,22 +409,19 @@ class GoFish:
         - Check if the active player has a book (4 of equal rank)
         after each round
         """
+        
 
         if active_player == "human":
             player_books = self.human_books
             player_hand = self.human_hand
 
-            # Test output
-            print("\n=== Checking for human books ===\n")
-
         elif active_player == "computer":
             player_books = self.computer_books
             player_hand = self.computer_hand
 
-            print(f"\n=== Computer book_check_trigger: {book_check_trigger} ===\n")
-
-            # Test output
-            print("\n=== Checking for computer books ===\n")
+        self.score_board(active_player)
+        print("\n=== Checking for books ===\n")
+        sleep(1)
 
         duplicate_ranks = [card for card in self.player_hand
                            if book_check_trigger in card]
@@ -469,7 +441,6 @@ class GoFish:
         if self.human_books + self.computer_books == 13:
             self.game_end()
         return self.human_books, self.computer_books
-        # sleep(0.5)
 
     def score_board(self, active_player):
 
@@ -477,47 +448,67 @@ class GoFish:
         - Display active player, human hand and book count for both players
         """
 
-        # human_books = self.human_books
-        # computer_books = self.computer_books
+        GoFish().clear_screen()
+
+        if active_player == "human":
+            player_display = "YOU"
+        elif active_player == "computer":
+            player_display = "COMPUTER"
         
         print("\n")
         print("┌──────────────────────────────────────────────────────────┐")
-        print("│                       SCORE BOARD                        │")
+        print("│                       SCOREBOARD                         │")
         print("└──────────────────────────────────────────────────────────┘")
-        print(f"│   Active player: {active_player}                                   │")
-        print("│                                                          │")
-        print("│                                                          │")
-        print("│   Human hand:", end=" ")
+        print("\n")
+        print(f"   Active player: {player_display}")
+        print("\n")
+        print("   Your hand:", end=" ")
         print(*self.human_hand, end=" ")
-        print("                      │")
-        print("│                                                          │")
-        print("│                                                          │")
-        print(f"│   Human books: {self.human_books}                     Computer books: {self.computer_books}   │")
-        print("└──────────────────────────────────────────────────────────┘")
+        print("\n")
+        print("\n")
+        print("────────────────────────────────────────────────────────────")
+        print(f"     Your books: {self.human_books}                    Computer books: {self.computer_books}    ")
+        print("────────────────────────────────────────────────────────────")
+        print("                         MESSAGES                           ")
+        print("────────────────────────────────────────────────────────────")
 
-
-    # def stock_pile(self):
-    #     """
-    #     - # Cards left
-    #     - Rank and suit of cards left
-    #     """
-        
-    #     # Test output
-    #     print("\n*** Function running: stock_pile() ***\n")
-
-    #     if self.stockpile_list == [] and self.computer_hand == []:
-    #         self.game_end()
-
-    def input_validation(self):
+    def input_validation(self, requested_card):
         """
         Check for:
         - Format
         - Case
         - Range
         """
+        court_card_list = ["Ace", "King", "Queen", "Jack"]
+        if requested_card in court_card_list:
+            requested_card = requested_card[:1]
+            print(f"Court card: {requested_card}")
+            sleep(3)
+            return requested_card
 
-        # Test output
-        print("\n*** Function running: input_validation() ***\n")
+        valid_input_list = ["Ace",
+                            "King",
+                            "Queen",
+                            "Jack",
+                            "A",
+                            "K",
+                            "Q",
+                            "J",
+                            "10",
+                            "9",
+                            "8",
+                            "7",
+                            "6",
+                            "5",
+                            "4",
+                            "3",
+                            "2"]
+        if requested_card not in valid_input_list:
+            print(f"*** {requested_card} is not a valid option. Please try again. ***")
+            sleep(3)
+            self.play_game_round("human", "computer", self.human_books, self.computer_books)
+        else:
+            return requested_card
 
     def game_end(self):
         """
@@ -594,16 +585,4 @@ def main():
     game = GoFish()
     game.new_game()
 
-# Function trace
-# def tracefunc(frame, event, arg, indent=[0]):
-#       if event == "call":
-#           indent[0] += 2
-#           print("-" * indent[0] + "> call function", frame.f_code.co_name)
-#       elif event == "return":
-#           print("<" + "-" * indent[0], "exit function", frame.f_code.co_name)
-#           indent[0] -= 2
-#       return tracefunc
-# import sys
-# sys.setprofile(tracefunc)
 main()
-
