@@ -55,7 +55,7 @@ class GoFish:
     ------------------
     - The goal is to win the most books of cards
     - A book is 4 cards of equal rank, eg.
-        3\u2660 3\u2663 3\u2665 3\u2666, J\u2660 J\u2663 J\u2665 J\u2666, etc
+      3\u2660 3\u2663 3\u2665 3\u2666, J\u2660 J\u2663 J\u2665 J\u2666, etc
 
     The Players
     -----------
@@ -65,15 +65,15 @@ class GoFish:
     --------
     - Each player starts with 7 cards
     - The remaining cards are placed face down
-        on the table to form the stockpile
+      on the table to form the stockpile
 
     Playing the Game
     ----------------
     1. You start by requesting a card from the computer
     2. If the computer has one or more of the card you requested, it will
-        be added to your hand and you get another turn
+       be added to your hand and you get another turn
     3. If the computer doesn't have the card(s) you requested, you draw a
-        card from the stockpile
+       card from the stockpile
     4. Now it's the computer's turn
 
     Game End
@@ -97,13 +97,12 @@ class GoFish:
     INSTRUCTIONS
     ------------
 
-    1. Enter your name
-    2. Enter the card you wish to request from the computer
-    3. For number ranks, you enter 2 to 10
-    4. For Jack, Queen, King & Ace, enter either the full name or
+    1. Enter the rank of the card you wish to request from the computer
+    2. For number cards, you enter 2 to 10
+    3. For court cards (Jack, Queen, King & Ace), enter either the full name or
     the first letter, e.g. Q or Queen
     5. If you need to review the rules & instructions during the game,
-    enter either "H" or "Help"
+    enter "H" when it's your turn too request a card
     6. After the game has ended, enter either:
         - "Y" to play again or
         - "N" to exit the game
