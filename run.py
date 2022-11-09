@@ -144,10 +144,16 @@ class GoFish:
         # Test output
         print("\n*** Function running: new_game() ***\n")
         sleep(0.5)
-        self.clear_screen()
+
+        # Test output
+        print(f"Human books: {self.human_books}")
+        print(f"Computer books: {self.computer_books}")
+
+        # self.clear_screen()
         self.game_rules()
         self.game_instructions()
         self.game_start()
+
 
     def game_start(self):
         """
@@ -264,6 +270,7 @@ class GoFish:
         computer_books = self.computer_books
         book_check_trigger = random.choice(self.player_hand)
         
+        # self.check_for_books(active_player, book_check_trigger, human_books, computer_books)
         self.check_for_books(active_player, book_check_trigger)
 
         self.play_game_round(active_player, opponent, stockpile_list,
@@ -310,6 +317,7 @@ class GoFish:
         else:
             stockpile_list.remove(drawn_card)
         
+        # self.check_for_books(active_player, book_check_trigger, human_books, computer_books)
         self.check_for_books(active_player, book_check_trigger)
         # self.switch_player(active_player, opponent)
         self.switch_player(active_player, opponent, human_books, computer_books)
@@ -417,7 +425,8 @@ class GoFish:
         print("\n------------------------------------------------------------")
 
         self.check_hand(active_player, opponent,
-                        requested_card, book_check_trigger)
+                        requested_card, book_check_trigger,
+                        human_books, computer_books)
 
         self.check_for_books(active_player, book_check_trigger)
 
@@ -434,7 +443,7 @@ class GoFish:
         print("\n------------------------------------------------------------")
 
     def check_hand(self, active_player, opponent, requested_card, 
-                   book_check_trigger):
+                   book_check_trigger, human_books, computer_books):
         """
         - Check hand for requested card otherwise
         draw a card from the stockpile
@@ -472,6 +481,7 @@ class GoFish:
         if match:
             print(f"The {opponent} is handing over {len(match)} {singular_plural}.")
             self.player_hand.extend(match)
+            # self.check_for_books(active_player, book_check_trigger, human_books, computer_books)
             self.check_for_books(active_player, book_check_trigger)
         else:
             print(f"\n=== The {opponent} doesn't have that card. ===\n")
@@ -495,6 +505,7 @@ class GoFish:
                              human_books, computer_books)
 
     def check_for_books(self, active_player, book_check_trigger):
+    # def check_for_books(self, active_player, book_check_trigger, human_books, computer_books):
         """
         - Check if the active player has a book (4 of equal rank)
         after each round
@@ -504,11 +515,13 @@ class GoFish:
         print("\n*** Function running: check_for_books() START***\n")
         print(f"Active player: {active_player}")
         # sleep(1)
-
-        player_books = self.player_books
+        
+        # global human_books
+        # global computer_books
+        # player_books = self.player_books
         # human_hand = self.human_hand
-        human_books = self.human_books
-        computer_books = self.computer_books
+        # human_books = self.human_books
+        # computer_books = self.computer_books
 
         if active_player == "human":
             player_books = self.human_books
@@ -523,6 +536,7 @@ class GoFish:
         elif active_player == "computer":
             player_books = self.computer_books
             player_hand = self.computer_hand
+
             print(f"\n=== Computer book_check_trigger: {book_check_trigger} ===\n")
 
             # Test output
@@ -547,23 +561,23 @@ class GoFish:
                 player_hand.remove(card)
             
             if active_player == "human":
-                human_books += 1
+                self.human_books += 1
 
                 # Test output
-                print(f"\n*** Human books: {human_books}\n")
+                print(f"\n*** Human books: {self.human_books}\n")
 
             elif active_player == "computer":
-                computer_books += 1
+                self.computer_books += 1
 
                 # Test output
-                print(f"\n*** Computer books: {computer_books}\n")
+                print(f"\n*** Computer books: {self.computer_books}\n")
 
         # Test output
         print("\n*** Function running: check_for_books() END***\n")
-        print(f"*** Human books: {human_books}\n")
-        print(f"*** Computer books: {computer_books}\n")
+        print(f"*** Human books: {self.human_books}\n")
+        print(f"*** Computer books: {self.computer_books}\n")
 
-        if human_books + computer_books == 13:
+        if self.human_books + self.computer_books == 13:
             self.game_end()
         return self.human_books, self.computer_books
         # sleep(0.5)
@@ -634,15 +648,15 @@ class GoFish:
         - Anounce the winner
         """
 
-        global human_books
-        global computer_books
+        # global human_books
+        # global computer_books
 
         # Test input
         # human_books = 6
         # computer_books = 7
         
         # Display winner/draw message
-        if human_books > computer_books:
+        if self.human_books > self.computer_books:
             message = ("\n*** Congratulations - You are the winner! ***\n")
         else:
             message = ("\n   *** Sorry - you lost this one! ***\n")
@@ -651,16 +665,16 @@ class GoFish:
         print("*" * 45)
         print(message.upper())
         print("\n--------------- FINAL SCORES ----------------\n")
-        print(f"    You: {human_books} books", end="        ")
-        print(f"Computer: {computer_books} books\n")
+        print(f"    You: {self.human_books} books", end="        ")
+        print(f"Computer: {self.computer_books} books\n")
         print("*" * 45)
 
         # Ask to play again
         play_again_input = input("\nDo you want to play again? Y/N ")
 
         if play_again_input.upper() == "Y":
-            human_books = 0
-            computer_books = 0
+            self.human_books = 0
+            self.computer_books = 0
             self.play_again()
         else:
             print("*** BYE! ***")
