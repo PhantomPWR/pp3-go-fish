@@ -13,9 +13,10 @@ class GoFish:
     def __init__(self):
         self.shuffled_deck = []
         self.human_hand = []
+        self.computer_hand = []
+        self.opponent_hand = []
         self.human_books = 0
         self.player_books = 0
-        self.computer_hand = []
         self.computer_books = 0
         self.duplicate_ranks = []
         self.stockpile_list = []
@@ -23,7 +24,6 @@ class GoFish:
         self.requested_card = ""
         self.book_check_trigger = ""
         self.active_player = ""
-        # self.opponent = ""
 
     def clear_screen(self):
         """
@@ -66,7 +66,6 @@ class GoFish:
     - Each player starts with 7 cards
     - The remaining cards are placed face down
       on the table to form the stockpile
-
         """
 
         rules_pt2 = """
@@ -87,8 +86,8 @@ class GoFish:
     the stockpile
 
         """
-        print(rules_pt1)
-        input("Press <ENTER> to continue...")
+        print(rules_pt1, ("\n"))
+        input("Press <ENTER> for the Rules(part 2)...")
         print(rules_pt2)
         print("=" * 80)
 
@@ -113,6 +112,7 @@ class GoFish:
         - "N" to exit the game
         """
 
+        input("Press <ENTER> for Instructions...")
         print(instructions)
         print("-" * 80)
 
@@ -128,7 +128,7 @@ class GoFish:
         sleep(0.5)
         print("Go Fish!")
         print("\u2588")
-        input("Press <ENTER> for the game rules & instructions...")
+        input("Press <ENTER> for the Rules(part 1)...")
 
         self.clear_screen()
         self.game_rules()
@@ -188,7 +188,6 @@ class GoFish:
         - Add remainder to the stockpile
         """
 
-        # stockpile_list = []
         counter = 1
         while counter <= 14:
             deck_count = len(shuffled_deck)
@@ -218,8 +217,8 @@ class GoFish:
 
         active_player = "human"
         opponent = "computer"
-        human_hand = self.human_hand
-        computer_hand = self.computer_hand
+        # human_hand = self.human_hand
+        # computer_hand = self.computer_hand
         human_books = self.human_books
         computer_books = self.computer_books
         book_check_trigger = random.choice(self.player_hand)
@@ -265,7 +264,7 @@ class GoFish:
             sleep(0.5)
     
         # End the game if both the stockpile and a player's hand are empty
-        if stockpile_list == [] and not self.player_hand:
+        if len(stockpile_list) == 0 and not self.player_hand:
             self.game_end()
         else:
             stockpile_list.remove(drawn_card)
@@ -414,13 +413,12 @@ class GoFish:
         after each round
         """
         
-
         if active_player == "human":
-            player_books = self.human_books
+            # player_books = self.human_books
             player_hand = self.human_hand
 
         elif active_player == "computer":
-            player_books = self.computer_books
+            # player_books = self.computer_books
             player_hand = self.computer_hand
 
         self.score_board(active_player)
@@ -459,15 +457,14 @@ class GoFish:
         elif active_player == "computer":
             player_display = "COMPUTER"
         
-        print("\n")
         print("┌──────────────────────────────────────────────────────────┐")
         print("│                       SCOREBOARD                         │")
         print("└──────────────────────────────────────────────────────────┘")
         print("\n")
         print(f"   Active player: {player_display}")
         print("\n")
-        print("   Your hand:", end=" ")
-        print(*self.human_hand, end=" ")
+        print("   Your hand:")
+        print("\n  ", *self.human_hand, end=" ")
         print("\n")
         print("\n")
         print("────────────────────────────────────────────────────────────")
@@ -479,14 +476,13 @@ class GoFish:
     def input_validation(self, requested_card):
         """
         Check for:
-        - Format
-        - Case
-        - Range
+                - Format
+                - Case
+                - Range
         """
         court_card_list = ["Ace", "King", "Queen", "Jack"]
         if requested_card in court_card_list:
             requested_card = requested_card[:1]
-            print(f"Court card: {requested_card}")
             sleep(0.5)
             return requested_card
 
@@ -519,8 +515,9 @@ class GoFish:
         - Game ends when either player's hand AND
         the stockpile are empty
         """
-        print("\n====== End of game ======\n")
-        
+        print("*** THE GAME HAS ENDED ***")
+        sleep(1)
+        self.clear_screen()
         self.anounce_winner()
         self.play_again()
 
@@ -546,14 +543,17 @@ class GoFish:
 
         # Ask to play again
         play_again_input = input("\nDo you want to play again? Y/N ")
-
+        
+        # Yes, play again
         if play_again_input.upper() == "Y":
+            # Reset book scores
             self.human_books = 0
             self.computer_books = 0
             self.play_again()
         else:
+            # No - quit
             print("*** BYE! ***")
-            sleep(5)
+            sleep(2)
             quit()
 
     def play_again(self):
@@ -562,10 +562,7 @@ class GoFish:
         - Exclude rules & instructions
         """
 
-        # Test output
-        print("\n*** Function running: play_again() ***\n")
-
-        # TEMP CLEAR SCREEN
+        # Clear screen
         # Linux & OSX
         if os.name == "posix":
             os.system("clear")
@@ -578,8 +575,6 @@ class GoFish:
         self.computer_hand.clear()
 
         self.build_deck()
-        # deal_cards()
-        # play_game_round(active_player, opponent, stockpile_list)
 
 
 def main():
@@ -588,5 +583,6 @@ def main():
     """
     game = GoFish()
     game.new_game()
+
 
 main()
