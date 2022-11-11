@@ -247,17 +247,17 @@ class GoFish:
         
         if active_player == "human":
             print(f"\n=== You drew a {drawn_card} from the stockpile.")
-            sleep(2)
+            sleep(0.5)
             self.human_hand.append(drawn_card)
             print(f"\n=== Adding {drawn_card} to your hand ===\n")
-            sleep(2)
+            sleep(0.5)
 
         else:
             print("\n=== The computer drew a card from the stockpile")
-            sleep(2)
+            sleep(0.5)
             self.computer_hand.append(drawn_card)
             print("\n=== Adding card to the computer's hand ===\n")
-            sleep(2)
+            sleep(0.5)
     
         # End the game if both the stockpile and a player's hand are empty
         if stockpile_list == [] and not self.player_hand:
@@ -332,7 +332,7 @@ class GoFish:
             requested_card = random_card[:-1]
             book_check_trigger = requested_card
             print(f"\nThe computer asked for {requested_card}s\n")
-            sleep(2)
+            sleep(0.5)
 
         book_check_trigger = requested_card
 
@@ -382,7 +382,7 @@ class GoFish:
             
             else:
                 print(f"The computer is handing over {singular}{card_count} {book_check_trigger}{plural}.")
-            sleep(3)
+            sleep(0.5)
             self.player_hand.extend(match)
             self.check_for_books(active_player, book_check_trigger)
         else:
@@ -390,7 +390,7 @@ class GoFish:
                 print(f"\n=== You don't have any {book_check_trigger}s. ===\n")
             else:
                 print(f"\n=== The computer doesn't have any {book_check_trigger}s. ===\n")
-            sleep(3)
+            sleep(0.5)
 
             self.draw_from_stockpile(active_player, opponent, stockpile_list,
                                      human_books, computer_books)
@@ -482,7 +482,7 @@ class GoFish:
         if requested_card in court_card_list:
             requested_card = requested_card[:1]
             print(f"Court card: {requested_card}")
-            sleep(3)
+            sleep(0.5)
             return requested_card
 
         valid_input_list = ["Ace",
@@ -504,7 +504,7 @@ class GoFish:
                             "2"]
         if requested_card not in valid_input_list:
             print(f"*** {requested_card} is not a valid option. Please try again. ***")
-            sleep(3)
+            sleep(0.5)
             self.play_game_round("human", "computer", self.human_books, self.computer_books)
         else:
             return requested_card
