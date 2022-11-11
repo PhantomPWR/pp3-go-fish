@@ -43,7 +43,7 @@ class GoFish:
         - Explain the game rules
         """
 
-        rules = """
+        rules_pt1 = """
     RULES OF GO FISH!
     -----------------
 
@@ -67,6 +67,9 @@ class GoFish:
     - The remaining cards are placed face down
       on the table to form the stockpile
 
+        """
+
+        rules_pt2 = """
     Playing the Game
     ----------------
     1. You start by requesting a card from the computer
@@ -84,7 +87,9 @@ class GoFish:
     the stockpile
 
         """
-        print(rules)
+        print(rules_pt1)
+        input("Press <ENTER> to continue...")
+        print(rules_pt2)
         print("=" * 80)
 
     def game_instructions(self):
@@ -123,7 +128,7 @@ class GoFish:
         sleep(0.5)
         print("Go Fish!")
         print("\u2588")
-        input("Press <enter> for the game rules & instructions...")
+        input("Press <ENTER> for the game rules & instructions...")
 
         self.clear_screen()
         self.game_rules()
