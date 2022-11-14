@@ -98,8 +98,8 @@ class GoFish:
     --------
     The game ends when either:
     - All 13 books have been won between the two players
-    - A player has an empty hand and there are no cards left in\
-    the stockpile
+    - A player has an empty hand and there are no cards left in \
+the stockpile
 
         """
         print(rules_pt1, ("\n"))
@@ -121,15 +121,15 @@ class GoFish:
     ------------
 
     1. Enter the rank of the card you wish to request from the computer
-    2. For number cards, you enter 2 to 10
-    3. For court cards (Jack, Queen, King & Ace), enter either the full name or
-    the first letter, e.g. Q or Queen
-    5. If you need to review the rules & instructions during the game,
-    enter "H" when it's your turn too request a card
-    6. To exit during the game enter "E"
+    2. For number(rank) cards, you enter 2 to 10
+    3. For court cards (Jack, Queen, King & Ace), enter either the full name \
+or the first letter, e.g. Q or Queen
+    4. If you need to review the rules & instructions during the game,
+       enter either "H" or "Help" when it's your turn too request a card
+    5. To exit during the game enter either "E" or "Exit"
     7. After the game has ended, enter either:
-        - "Y" to play again or
-        - "N" to exit the game
+       - "Y" or "Yes" to play again or
+       - "N" or "No" to exit the game
         """
 
         input("Press <ENTER> for Instructions...")
@@ -536,7 +536,8 @@ Computer books: {self.computer_books}    ")
                             "H",
                             "Help",
                             "E",
-                            "Exit"]
+                            "Exit",
+                            "Y"]
         if requested_card not in valid_input_list:
             print(f"*** {requested_card} is not a valid option. Please try \
 again. ***")
@@ -582,19 +583,21 @@ again. ***")
       
         # Yes, play again
         if play_again_input.upper() == "Y":
+
             # Reset book scores
             self.human_books = 0
             self.computer_books = 0
             self.play_again()
         else:
-            # No - quit
+            # No - quit game
             print("*** BYE! ***")
             sleep(2)
             quit()
 
     def play_again(self):
         """
-        - Reset all
+        - Reset all scores
+        - Build a new deck
         - Exclude rules & instructions
         """
 
@@ -606,10 +609,12 @@ again. ***")
         # Windows
         else:
             os.system("cls")
-
+        
+        # Reset scores
         self.human_hand.clear()
         self.computer_hand.clear()
 
+        # Build a new deck
         self.build_deck()
 
 
