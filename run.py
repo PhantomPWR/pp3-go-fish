@@ -4,6 +4,9 @@ from time import sleep
 
 import random
 
+import curses
+from curses import wrapper
+
 
 class GoFish:
     """
@@ -331,12 +334,19 @@ press <ENTER>:\n")
         if active_player == "human":
             human_input = input("\nWhich card would you like to ask for? ")
             requested_card = human_input.capitalize()
-            if requested_card == "H":
+            if requested_card == "Help" or requested_card == "H":
+                self.input_validation(requested_card)
                 self.game_rules()
                 self.game_instructions()
                 input("Press <enter> to continue...")
                 self.play_game_round(active_player, opponent,
                                      human_books, computer_books)
+            elif requested_card == "Exit" or requested_card == "E":
+                self.input_validation(requested_card)
+                print("Thanks for playing!")
+                print("*** BYE! ***")
+                sleep(2)
+                quit()
             else:
                 self.input_validation(requested_card)
                 print(f"\nYou asked for {requested_card}s")
@@ -399,7 +409,7 @@ press <ENTER>:\n")
             if active_player == "computer":
                 print(f"You are handing over {singular}{card_count} \
 {book_check_trigger}{plural}.")
-           
+          
             else:
                 print(f"The computer is handing over {singular}{card_count} \
 {book_check_trigger}{plural}.")
@@ -410,7 +420,8 @@ press <ENTER>:\n")
             if active_player == "computer":
                 print(f"\n=== You don't have any {book_check_trigger}s. ===\n")
             else:
-                print(f"\n=== The computer doesn't have any {book_check_trigger}s. ===\n")
+                print(f"\n=== The computer doesn't have any \
+                    {book_check_trigger}s. ===\n")
             sleep(0.5)
 
             self.draw_from_stockpile(active_player, opponent, stockpile_list,
@@ -521,11 +532,17 @@ Computer books: {self.computer_books}    ")
                             "5",
                             "4",
                             "3",
-                            "2"]
+                            "2",
+                            "H",
+                            "Help",
+                            "E",
+                            "Exit"]
         if requested_card not in valid_input_list:
-            print(f"*** {requested_card} is not a valid option. Please try again. ***")
-            sleep(0.5)
-            self.play_game_round("human", "computer", self.human_books, self.computer_books)
+            print(f"*** {requested_card} is not a valid option. Please try \
+again. ***")
+            sleep(1)
+            self.play_game_round("human", "computer",
+                                 self.human_books, self.computer_books)
         else:
             return requested_card
 
