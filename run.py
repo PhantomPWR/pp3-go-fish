@@ -24,6 +24,19 @@ class GoFish:
         self.requested_card = ""
         self.book_check_trigger = ""
         self.active_player = ""
+        self.text_to_remove = ""
+
+    def remove_text(self, text_to_remove):
+        """
+        - Remove text which is used only once, e.g.
+          "Press <ENTER> for the Rules(part 2)..."
+        """
+       
+        text_to_remove = ""
+        for i in range(len(text_to_remove)):
+            i.replaceAll(" ")
+        print(self.text_to_remove)
+        return text_to_remove
 
     def clear_screen(self):
         """
@@ -64,8 +77,8 @@ class GoFish:
     The Deal
     --------
     - Each player starts with 7 cards
-    - The remaining cards are placed face down
-      on the table to form the stockpile
+    - The remaining cards are placed face down\
+ on the table to form the stockpile
         """
 
         rules_pt2 = """
@@ -82,12 +95,15 @@ class GoFish:
     --------
     The game ends when either:
     - All 13 books have been won between the two players
-    - A player has an empty hand and there are no cards left in
+    - A player has an empty hand and there are no cards left in\
     the stockpile
 
         """
         print(rules_pt1, ("\n"))
-        input("Press <ENTER> for the Rules(part 2)...")
+        text_to_remove = input("Press <ENTER> for the Rules(part 2)...")
+        self.remove_text(text_to_remove)
+        print("Calling function remove_text()")
+        
         print(rules_pt2)
         print("=" * 80)
 
@@ -107,7 +123,8 @@ class GoFish:
     the first letter, e.g. Q or Queen
     5. If you need to review the rules & instructions during the game,
     enter "H" when it's your turn too request a card
-    6. After the game has ended, enter either:
+    6. To exit during the game enter "E"
+    7. After the game has ended, enter either:
         - "Y" to play again or
         - "N" to exit the game
         """
@@ -127,7 +144,6 @@ class GoFish:
         self.clear_screen()
         sleep(0.5)
         print("Go Fish!")
-        print("\u2588")
         input("Press <ENTER> for the Rules(part 1)...")
 
         self.clear_screen()
@@ -140,7 +156,8 @@ class GoFish:
         - Start the game once the human player is ready
         """
 
-        start_game_input = input("When your're ready to play, press <ENTER>:\n")
+        start_game_input = input("When your're ready to play, \
+press <ENTER>:\n")
         if start_game_input == "":
             self.build_deck()
         else:
@@ -380,10 +397,12 @@ class GoFish:
 
         if match:
             if active_player == "computer":
-                print(f"You are handing over {singular}{card_count} {book_check_trigger}{plural}.")
-            
+                print(f"You are handing over {singular}{card_count} \
+{book_check_trigger}{plural}.")
+           
             else:
-                print(f"The computer is handing over {singular}{card_count} {book_check_trigger}{plural}.")
+                print(f"The computer is handing over {singular}{card_count} \
+{book_check_trigger}{plural}.")
             sleep(0.5)
             self.player_hand.extend(match)
             self.check_for_books(active_player, book_check_trigger)
@@ -448,13 +467,14 @@ class GoFish:
         - Display active player, human hand and book count for both players
         """
 
-        GoFish().clear_screen()
+        # GoFish().clear_screen()
 
         if active_player == "human":
             player_display = "YOU"
         elif active_player == "computer":
             player_display = "COMPUTER"
         
+        print("\n" * 10)
         print("┌──────────────────────────────────────────────────────────┐")
         print("│                       SCOREBOARD                         │")
         print("└──────────────────────────────────────────────────────────┘")
@@ -466,7 +486,8 @@ class GoFish:
         print("\n")
         print("\n")
         print("────────────────────────────────────────────────────────────")
-        print(f"     Your books: {self.human_books}                    Computer books: {self.computer_books}    ")
+        print(f"     Your books: {self.human_books}                    \
+Computer books: {self.computer_books}    ")
         print("────────────────────────────────────────────────────────────")
         print("                         MESSAGES                           ")
         print("────────────────────────────────────────────────────────────")
