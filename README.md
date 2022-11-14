@@ -1,31 +1,79 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# Go Fish!
 
-Welcome Jean de Villiers,
+## Diploma in Full Stack Software Development - Portfolio Project 
 
-This is the Code Institute student template for deploying your third portfolio project, the Python command-line project. The last update to this file was: **August 17, 2021**
+<!-- Mockup Image -->
 
-## Reminders
 
-* Your code must be placed in the `run.py` file
-* Your dependencies must be placed in the `requirements.txt` file
-* Do not edit any of the other files or your code may not deploy properly
+[Click here to view the live project.](https://pp3-go-fish.herokuapp.com/)
 
-## Creating the Heroku app
+Go Fish! is a terminal-based card game which is aimed at children aged 6+.
 
-When you create the app, you will need to add two buildpacks from the _Settings_ tab. The ordering is as follows:
+## UX
+My aim was to create a game which is fun to play, yet simple to manipulate using text inputs only.
 
-1. `heroku/python`
-2. `heroku/nodejs`
+### Ideal Clients
 
-You must then create a _Config Var_ called `PORT`. Set this to `8000`
+* Children aged 6+
+* English speakers
+* Children who enjoy playing games which involve pattern-matching
 
-If you have credentials, such as in the Love Sandwiches project, you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
+### The application helps clients to:
+* Easily navigate the terminal
+* Test and improve short-term memory skills
+* have fun
 
-Connect your GitHub repository and deploy as normal.
+### Owner Stories
+* I want to a game which is simple, yet fun to play
+* I'd like to encourage players to come back for more
+* I want to demonstrate my newly acquired Python skills
 
-## Constraints
+### User Stories
+* As a visitor, I want a game that is simple to navigate and play
+* As a visitor I enjoy the challenge of trying to beat the computer
 
-The deployment terminal is set to 80 columns by 24 rows. That means that each line of text needs to be 80 characters or less otherwise it will be wrapped onto a second line.
+## Scope
+The application featuers are as follows:
 
------
-Happy coding!
+### Features
+
+1. A section explaining the rules for playing the game, scoring, etc
+2. Instructions on how to enter card requests
+3. A help command to remind the player of the rules & instructions
+4. An exit command for terminating the game mid-play, if desired
+5. Notifications on which cards have been requested, drawn from the stockpile, etc
+6. A scoreboard displaying whose turn it is to play, the user's hand and books won by both the user and computer
+
+### Features to implement in future
+1. The ability to allow multiple players against each other or the computer
+2. Adding graphical representations of the cards, as opposed to just text
+
+## Skeleton
+The game uses a single terminal window as the interface, run on Python.
+
+* I visited the [Bicycle Cards](https://bicyclecards.com/how-to-play/go-fish/) website, to look for possible card games which one would be able to play, using text-only input and output.
+* Eventually, I settled on Go Fish! as it fitted the bill.
+Below is the initial flowchart I created in order to work out which basic functions to use as a starting point:
+
+![](docs/images/readme/go-fish-flowchart.webp)
+
+## Technologies Used
+* [Gitpod](https://gitpod.io/workspaces) - IDE for writing code and version control
+* [Github](https://github.com/) - Where the repository is hosted
+* [Heroku](https://id.heroku.com/login) - Hosting for the live app
+* [pylint](https://pypi.org/project/pylint/) - Code validation and error-checking
+* [LucidChart](https://lucid.app/lucidchart) - Flowchart application
+* [Cloudconvert.com](https://cloudconvert.com/) - Converting README images to .webp format
+* [Tinypng.com](https://tinypng.com/) - README image compression & optimisation
+
+# Testing 
+## Testing against client stories from UX section of this document
+
+1. **As a visitor, I want a game that is simple to navigate and play**
+* Inputs are as simple as pressing <ENTER>, typing numbers (2 to 10), and letters (J, Q, K, A, H, E)
+* The player receive notifications when cards are dealt, the cards in their hand, whose turn it is and books won
+
+![](docs/images/readme/scoreboard.webp)
+
+2. **As a visitor I enjoy the challenge of trying to beat the computer**
+* 

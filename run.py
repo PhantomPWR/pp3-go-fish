@@ -255,7 +255,7 @@ press <ENTER>:\n")
         
         self.human_books = human_books
         self.computer_books = computer_books
-        
+       
         self.score_board(active_player)
         print("\n=== Drawing a card from the stockpile... ===\n")
         if not self.stockpile_list and not self.player_hand:
@@ -266,7 +266,7 @@ press <ENTER>:\n")
         # Use the drawn card's rank to trigger
         #  checking for books
         book_check_trigger = drawn_card[:1]
-        
+       
         if active_player == "human":
             print(f"\n=== You drew a {drawn_card} from the stockpile.")
             sleep(0.5)
@@ -280,13 +280,13 @@ press <ENTER>:\n")
             self.computer_hand.append(drawn_card)
             print("\n=== Adding card to the computer's hand ===\n")
             sleep(0.5)
-    
+   
         # End the game if both the stockpile and a player's hand are empty
         if len(stockpile_list) == 0 and not self.player_hand:
             self.game_end()
         else:
             stockpile_list.remove(drawn_card)
-        
+       
         self.check_for_books(active_player, book_check_trigger)
         self.switch_player(active_player)
 
