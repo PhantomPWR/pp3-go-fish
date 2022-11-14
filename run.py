@@ -217,8 +217,6 @@ class GoFish:
 
         active_player = "human"
         opponent = "computer"
-        # human_hand = self.human_hand
-        # computer_hand = self.computer_hand
         human_books = self.human_books
         computer_books = self.computer_books
         book_check_trigger = random.choice(self.player_hand)
@@ -245,7 +243,7 @@ class GoFish:
         else:
             drawn_card = stockpile_list[0]
 
-        # Use the drawn card's rank to trigger 
+        # Use the drawn card's rank to trigger
         #  checking for books
         book_check_trigger = drawn_card[:1]
         
@@ -526,7 +524,7 @@ class GoFish:
         - Display final scores
         - Anounce the winner
         """
-        
+      
         # Display win/lose message
         if self.human_books > self.computer_books:
             message = ("\n*** Congratulations - You are the winner! ***\n")
@@ -543,7 +541,7 @@ class GoFish:
 
         # Ask to play again
         play_again_input = input("\nDo you want to play again? Y/N ")
-        
+      
         # Yes, play again
         if play_again_input.upper() == "Y":
             # Reset book scores
