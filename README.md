@@ -76,4 +76,30 @@ Below is the initial flowchart I created in order to work out which basic functi
 ![](docs/images/readme/scoreboard.webp)
 
 2. **As a visitor I enjoy the challenge of trying to beat the computer**
-* 
+* Players can't see the opponent's cards. Card's can only be selected from a player's hand. The trick is to infer the opponent's cards, based on their previous requests.
+![](docs/images/readme/card-request.webp)
+
+### Additional Testing
+* I used the linter to check for any issues as I was coding
+* I also played several games to identify and cater for edge cases, as well as handling errors & exceptions
+
+## Compatibility
+I tested the application in the following browsers:
+
+* Google Chrome
+* Mozilla FireFox
+* Microsoft Edge
+
+I tried testing on mobile devices and the app loads and displays successfully. However, the terminal doesn't accept/recognise user input on a mobile device.
+
+## Validation
+I used three linters to check my code. All three reported the same f-string syntax error, when the syntax is indeed correct. I can only conclude that this issue is with the linters and not the code.
+
+![Infoheap](docs/images/readme/infoheap-python-checker-false-error-f-string.webp)
+![Tutorialspoint](docs/images/readme/tutorialspoint-false-error-f-string.webp)
+![Extends Class](docs/images/readme/extendsclass-python-checker-false-error-f-string.webp)
+
+## Deployment
+
+
+## Credits
