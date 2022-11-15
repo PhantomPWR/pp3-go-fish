@@ -4,9 +4,6 @@ from time import sleep
 
 import random
 
-import curses
-from curses import wrapper
-
 
 class GoFish:
     """
@@ -29,22 +26,39 @@ class GoFish:
         self.active_player = ""
         self.text_to_remove = ""
 
-    def remove_text(self, text_to_remove):
+    def welcome(self):
         """
-        - Remove text which is used only once, e.g.
-          "Press <ENTER> for the Rules(part 2)..."
+        - Display the welcome screen
         """
-       
-        text_to_remove = ""
-        for i in range(len(text_to_remove)):
-            i.replaceAll(" ")
-        print(self.text_to_remove)
-        return text_to_remove
+        print("*" * 80)
+        print("*")
+        print("*")
+        print("*")
+        print("*")
+        print("*")
+        print("*")
+        print("*")
+        print("*")
+        print("*")
+        print("*")
+        print("*")
+        print("*")
+        print("*")
+        print("*")
+        print("*")
+        print("*")
+        print("*")
+        print("*")
+        print("*")
+        print("*")
+        print("*")
+        print("*")
+        print("*")
 
     def clear_screen(self):
         """
-        Detect operating system and run relevant
-        clear screen command
+        - Detect operating system and run relevant
+          "clear screen" command
         """
         # Linux & OSX
         if os.name == "posix":
@@ -466,37 +480,35 @@ press <ENTER>:\n")
         - Display active player, human hand and book count for both players
         """
 
-        # GoFish().clear_screen()
-
         if active_player == "human":
             player_display = "YOU"
         elif active_player == "computer":
             player_display = "COMPUTER"
         
         print("\n" * 10)
-        print("┌───────────────────────────────────────────────────────\
-───────────────┐")
-        print("│                             SCOREBOARD                \
-               │")
-        print("└───────────────────────────────────────────────────────\
-───────────────┘")
+        print("┌──────────────────────────────────────────────────────────────\
+────────────────┐")
+        print("│                                 SCOREBOARD                   \
+                │")
+        print("└──────────────────────────────────────────────────────────────\
+────────────────┘")
         print("\n")
         print(f"   Active player: {player_display}")
         print("\n")
         print("   Your hand:")
         print("\n  ", *self.human_hand, end=" ")
         print("\n")
-        print("────────────────────────────────────────────────────────\
-────────────────")
-        print(f"   Your books: {self.human_books}                      \
-             Computer books: {self.computer_books}    ")
-        print("========================================================\
-================")
+        print("───────────────────────────────────────────────────────────────\
+─────────────────")
+        print(f"   Your books: {self.human_books}                             \
+              Computer books: {self.computer_books}")
+        print("===============================================================\
+=================")
         print("\n")
-        print("   MESSAGES                           H - Game Rules   E\
- - Exit game")
-        print("────────────────────────────────────────────────────────\
-────────────────")
+        print("   MESSAGES                                   H - Game Rules   \
+E - Exit game")
+        print("───────────────────────────────────────────────────────────────\
+─────────────────")
 
     def input_validation(self, requested_card):
         """
@@ -597,13 +609,7 @@ again. ***")
         """
 
         # Clear screen
-        # Linux & OSX
-        if os.name == "posix":
-            os.system("clear")
-
-        # Windows
-        else:
-            os.system("cls")
+        self.clear_screen()
         
         # Reset scores
         self.human_hand.clear()
@@ -619,6 +625,7 @@ def main():
     """
     game = GoFish()
     game.new_game()
+    # game.welcome()
 
 
 main()

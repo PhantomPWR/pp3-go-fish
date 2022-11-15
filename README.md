@@ -5,7 +5,7 @@
 <!-- Mockup Image -->
 
 
-[Click here to view the live project.](https://pp3-go-fish.herokuapp.com/)
+**[Click here to view the live project.](https://pp3-go-fish.herokuapp.com/)**
 
 Go Fish! is a terminal-based card game which is aimed at children aged 6+.
 
@@ -32,8 +32,17 @@ My aim was to create a game which is fun to play, yet simple to manipulate using
 * As a visitor, I want a game that is simple to navigate and play
 * As a visitor I enjoy the challenge of trying to beat the computer
 
+## Skeleton
+The game uses a single terminal window as the interface, run on Python.
+
+* I visited the [Bicycle Cards](https://bicyclecards.com/how-to-play/go-fish/) website, to look for possible card games which one would be able to play, using text-only input and output.
+* Eventually, I settled on Go Fish! as it fitted the bill.
+Below is the initial flowchart I created in order to work out which basic functions to use as a starting point:
+
+![](docs/images/readme/go-fish-flowchart.webp)
+
 ## Scope
-The application featuers are as follows:
+The application features are as follows:
 
 ### Features
 
@@ -48,14 +57,12 @@ The application featuers are as follows:
 1. The ability to allow multiple players against each other or the computer
 2. Adding graphical representations of the cards, as opposed to just text
 
-## Skeleton
-The game uses a single terminal window as the interface, run on Python.
-
-* I visited the [Bicycle Cards](https://bicyclecards.com/how-to-play/go-fish/) website, to look for possible card games which one would be able to play, using text-only input and output.
-* Eventually, I settled on Go Fish! as it fitted the bill.
-Below is the initial flowchart I created in order to work out which basic functions to use as a starting point:
-
-![](docs/images/readme/go-fish-flowchart.webp)
+## Design
+The was to keep the interface and game format clear and simple.
+I imported the following modules:
+* **os:** This module helps with running operating system-specific commands for clearing the screen
+* **time -> sleep:** Used for output delays, in order to give the user time to read the content & messages
+* **random:** I've found this module to shuffle the deck better than the "manufactured" randomising I came up with 
 
 ## Technologies Used
 * [Gitpod](https://gitpod.io/workspaces) - IDE for writing code and version control
@@ -87,7 +94,7 @@ Below is the initial flowchart I created in order to work out which basic functi
 I tested the application in the following browsers:
 
 * Google Chrome
-* Mozilla FireFox
+* Mozilla Firefox
 * Microsoft Edge
 
 I tried testing on mobile devices and the app loads and displays successfully. However, the terminal doesn't accept/recognise user input on a mobile device.
@@ -100,6 +107,25 @@ I used three linters to check my code. All three reported the same f-string synt
 ![Extends Class](docs/images/readme/extendsclass-python-checker-false-error-f-string.webp)
 
 ## Deployment
+This project was developed using Heroku, committed to git and pushed to GitHub using git commands.
+You can clone this repository ![here](https://github.com/PhantomPWR/pp3-go-fish.git)
 
+To deploy this page to Heroku from GitHub repository, the following steps were taken:
+
+1. In the Heroku dashboard I selected 'New' in the top right hand corner and clicked on 'Create new app'
+2. Then I Created the App name and Choose my region as Europe. Then selected 'Create app'
+3. Then I selected Settings tab, and scrolled down to 'Buildpacks'. Here I added 'Python' clicked saved changes and then selected 'Node.js' and saved my changes again
+4. On top of the page I clicked on the 'Deploy' section, and I selected Github as my deployment method
+5. Then I selected 'Connect to Github, and searched for my repository name and clicked on 'Connect' to link my Heroku app to my Github repository code
+6. Scrolling down I have selected 'Enable Automatic Deploys' and after this I selected 'Deploy Branch' to deploy my project. I had to wait for it to build
+7. After it has successfully deployed a 'view' button appeared which took me to my deployed app
 
 ## Credits
+**Bicycle Cards:** ![](https://bicyclecards.com/how-to-play/go-fish/)
+**Lucid Chart:** ![](https://lucid.app/
+**Clear Screen:** ![](https://appdividend.com/2022/07/14/how-to-clear-screen-in-python/
+**Readme Document Structure:** ![MiaTothova](https://github.com/MiaTothova/story-vault)
+
+## Acknowledgement 
+* Thanks to [Pieter K de Villiers](https://github.com/pieterkdevilliers) for his suggestions and help in testing.
+* My mentor, [Adegbenga Adeye](https://github.com/deye9) for his guidance & support.
