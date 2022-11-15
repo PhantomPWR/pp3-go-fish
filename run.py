@@ -43,7 +43,7 @@ class GoFish:
         print("     ██          ██   ██     ██   ██     ██         ████")
         print("     ██          ██    ███████    ██     ██        ██  ██")
         print("\n")
-        sleep(3)
+        sleep(5)
 
     def good_bye(self):
         """
@@ -108,8 +108,8 @@ class GoFish:
     The Deal
     --------
     - Each player starts with 7 cards
-    - The remaining cards are placed face down\
- on the table to form the stockpile
+    - The remaining cards are placed face down on the
+      table to form the stockpile
         """
         print(rules_pt1)
         self.continue_prompt()
@@ -147,8 +147,8 @@ the stockpile
 
     1. Enter the rank of the card you wish to request from the computer
     2. For number(rank) cards, you enter 2 to 10
-    3. For court cards (Jack, Queen, King & Ace), enter either the full name \
-or the first letter, e.g. Q or Queen
+    3. For court cards (Jack, Queen, King & Ace), enter either the full name
+       or the first letter, e.g. Q or Queen
     4. If you need to review the rules & instructions during the game,
        enter either "H" or "Help" when it's your turn too request a card
     5. To exit during the game enter either "E" or "Exit"
@@ -191,12 +191,12 @@ or the first letter, e.g. Q or Queen
         - Start the game once the human player is ready
         """
 
-        start_game_input = input("When your're ready to play, \
+        start_game_input = input("   When your're ready to play, \
 press <ENTER>:\n")
         if start_game_input == "":
             self.build_deck()
         else:
-            print("Input not recognised. Please press <ENTER>")
+            print("   Input not recognised. Please press <ENTER>")
             self.game_start()
 
         self.build_deck()
@@ -299,11 +299,11 @@ press <ENTER>:\n")
         book_check_trigger = drawn_card[:1]
 
         if active_player == "human":
-            print(f"\nYou drew a {drawn_card} from the stockpile.")
+            print(f"\n   You drew a {drawn_card} from the stockpile.")
             self.human_hand.append(drawn_card)
 
         else:
-            print("\nThe computer drew a card from the stockpile")
+            print("\n   The computer drew a card from the stockpile")
             self.computer_hand.append(drawn_card)
         sleep(1)
 
@@ -327,12 +327,12 @@ press <ENTER>:\n")
         if active_player == "human":
             active_player = "computer"
             opponent = "human"
-            print("=== It is the computer's turn to play ===")
+            print("   === It is the computer's turn to play ===")
 
         else:
             active_player = "human"
             opponent = "computer"
-            print("=== It is your turn to play ===")
+            print("   === It is your turn to play ===")
         sleep(1.5)
 
         self.play_game_round(active_player, opponent,
@@ -357,24 +357,24 @@ press <ENTER>:\n")
         self.human_hand.sort()
 
         if active_player == "human":
-            human_input = input("\nWhich card would you like to ask for? ")
+            human_input = input("\n   Which card would you like to ask for? ")
             requested_card = human_input.capitalize()
             if requested_card in ("Help", "H"):
                 self.input_validation(requested_card)
                 self.game_rules()
                 self.game_instructions()
-                input("Press <enter> to continue...")
+                input("   Press <enter> to continue...")
                 self.play_game_round(active_player, opponent,
                                      human_books, computer_books)
             elif requested_card in ("Exit", "E"):
                 self.input_validation(requested_card)
-                print("\nThanks for playing!")
+                print("\n   Thanks for playing!")
                 sleep(3)
                 self.good_bye()
                 quit()
             else:
                 self.input_validation(requested_card)
-                print(f"\nYou asked for {requested_card}s")
+                print(f"\n   You asked for {requested_card}s")
                 sleep(1)
                 book_check_trigger = requested_card
 
@@ -385,7 +385,7 @@ press <ENTER>:\n")
                 random_card = str(random.choice([2, 10]))
             requested_card = random_card[:-1]
             book_check_trigger = requested_card
-            print(f"\nThe computer asked for {requested_card}s\n")
+            print(f"\n   The computer asked for {requested_card}s\n")
             sleep(0.5)
 
         book_check_trigger = requested_card
@@ -432,20 +432,20 @@ press <ENTER>:\n")
 
         if match:
             if active_player == "computer":
-                print(f"You are handing over {singular}{card_count} \
+                print(f"   You are handing over {singular}{card_count} \
 {book_check_trigger}{plural}.")
 
             else:
-                print(f"The computer is handing over {singular}{card_count} \
+                print(f"   The computer is handing over {singular}{card_count} \
 {book_check_trigger}{plural}.")
             sleep(1)
             self.player_hand.extend(match)
             self.check_for_books(active_player, book_check_trigger)
         else:
             if active_player == "computer":
-                print(f"\n=== You don't have any {book_check_trigger}s. ===\n")
+                print(f"\n   === You don't have any {book_check_trigger}s. ===\n")
             else:
-                print(f"\n=== The computer doesn't have any \
+                print(f"\n   === The computer doesn't have any \
 {book_check_trigger}s. ===\n")
             sleep(1.5)
 
@@ -485,11 +485,11 @@ press <ENTER>:\n")
 
             if active_player == "human":
                 self.human_books += 1
-                print("\n*** You have a book! ***\n")
+                print("\n   *** You have a book! ***\n")
 
             elif active_player == "computer":
                 self.computer_books += 1
-                print("\n*** The computer has a book! ***\n")
+                print("\n   *** The computer has a book! ***\n")
             sleep(1)
 
         # End the game if all 13 books have been won
@@ -569,9 +569,9 @@ E - Exit game")
                             "Exit",
                             "Y"]
         if requested_card not in valid_input_list:
-            print(f"*** {requested_card} is not a valid option. Please try \
+            print(f"   *** {requested_card} is not a valid option. Please try \
 again. ***")
-            sleep(1)
+            sleep(2)
             self.play_game_round("human", "computer",
                                  self.human_books, self.computer_books)
         else:
@@ -582,7 +582,7 @@ again. ***")
         - Game ends when either player's hand AND
         the stockpile are empty
         """
-        print("*** THE GAME HAS ENDED ***")
+        print("   *** THE GAME HAS ENDED ***")
         sleep(1)
         self.anounce_winner()
         self.play_again()
@@ -595,14 +595,14 @@ again. ***")
     
         # Display win/lose message
         if self.human_books > self.computer_books:
-            message = ("\n*** Congratulations - You are the winner! ***\n")
+            message = ("\n   *** Congratulations - You are the winner! ***\n")
         else:
             message = ("\n   *** Sorry - you lost this one! ***\n")
 
         # Display final scores
         print("*" * 45)
         print(message.upper())
-        print("\n--------------- FINAL SCORES ----------------\n")
+        print("\n---------------- FINAL SCORES ----------------\n")
         print(f"    You: {self.human_books} books", end="        ")
         print(f"Computer: {self.computer_books} books\n")
         print("*" * 45)
