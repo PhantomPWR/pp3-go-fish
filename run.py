@@ -11,49 +11,63 @@ class GoFish:
     """
 
     def __init__(self):
-        self.shuffled_deck = []
         self.human_hand = []
         self.computer_hand = []
+        self.player_hand = []
         self.opponent_hand = []
         self.human_books = 0
-        self.player_books = 0
         self.computer_books = 0
-        self.duplicate_ranks = []
         self.stockpile_list = []
-        self.player_hand = []
         self.requested_card = ""
         self.book_check_trigger = ""
-        self.active_player = ""
-        self.text_to_remove = ""
 
     def welcome(self):
         """
         - Display the welcome screen
         """
-        print("*" * 80)
-        print("*")
-        print("*")
-        print("*")
-        print("*")
-        print("*")
-        print("*")
-        print("*")
-        print("*")
-        print("*")
-        print("*")
-        print("*")
-        print("*")
-        print("*")
-        print("*")
-        print("*")
-        print("*")
-        print("*")
-        print("*")
-        print("*")
-        print("*")
-        print("*")
-        print("*")
-        print("*")
+        self.clear_screen()
+        print("\n")
+        print("      ████████")
+        print("     ██      ██")
+        print("     ██       ██        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄")
+        print("     ██             ███████                          ▐")
+        print("     ██      ███   ██     ██                         ▐")
+        print("     ██       ██   ██     ██                         ▐")
+        print("      █████████     ███████                          ▐")
+        print("                                                     ▐")
+        print("     ██████████                                      ██")
+        print("     ██          ██    ███████    ██     ██         ████")
+        print("     ██               ██     ██   ██     ██       ████████")
+        print("     █████████   ██    ████       █████████       ████████")
+        print("     ██          ██       ████    ██     ██        ██████")
+        print("     ██          ██   ██     ██   ██     ██         ████")
+        print("     ██          ██    ███████    ██     ██        ██  ██")
+        print("\n")
+        sleep(3)
+
+    def good_bye(self):
+        """
+        - Display the Goodbye screen
+        """
+        self.clear_screen()
+        print("\n")
+        print("      ████████                                    ██")
+        print("     ██      ██                                   ██")
+        print("     ██       ██                                  ██")
+        print("     ██             ███████     ███████     ████████")
+        print("     ██      ███   ██     ██   ██     ██   ██     ██")
+        print("     ██       ██   ██     ██   ██     ██   ██     ██")
+        print("      █████████     ███████     ███████     ████████")
+        print("\n")
+        print("     █████████                                 ██")
+        print("     ██      ██   ██      ██    ███████        ██")
+        print("     ██      ██    ██    ██    ██     ██       ██")
+        print("     █████████      ██  ██     █████████       ██")
+        print("     ██       ██      ██       ██              ██")
+        print("     ██       ██     ██        ██     ██       ")
+        print("     █████████     ███          ███████        ██")
+        print("\n")
+        sleep(5)
 
     def clear_screen(self):
         """
@@ -101,7 +115,7 @@ class GoFish:
         self.continue_prompt()
 
         rules_pt2 = """
-    Playing the Game
+    Playing the Game\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020
     ----------------
     1. You start by requesting a card from the computer
     2. If the computer has one or more of the card you requested, it will
@@ -122,13 +136,13 @@ the stockpile
         self.continue_prompt()
 
     def game_instructions(self):
-
         """
         - Game instructions
         """
 
         instructions = """
-    INSTRUCTIONS
+    INSTRUCTIONS\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\
+\u0020\u0020\u0020\u0020\u0020
     ------------
 
     1. Enter the rank of the card you wish to request from the computer
@@ -155,7 +169,8 @@ or the first letter, e.g. Q or Queen
         # Continue when the user presses <ENTER>
         input("Press <ENTER> to continue...")
 
-        # Delete the "Press <ENTER>..." text
+        # Move cursor up 2 lines, before printing the
+        # next block of text
         print("\033[A\033[A")
         print("\033[A\033[A")
 
@@ -166,10 +181,6 @@ or the first letter, e.g. Q or Queen
         - Deal hands
         - Set stockpile
         """
-
-        self.clear_screen()
-        print("Welcome to Go Fish!")
-
         self.clear_screen()
         self.game_rules()
         self.game_instructions()
@@ -241,14 +252,14 @@ press <ENTER>:\n")
             # Deal odd cards to human hand
             else:
                 self.player_hand = self.human_hand
-            
+
             # Add dealt card to relevant player's hand
             self.player_hand.append(card_to_deal)
 
             # Remove dealt card from deck
             shuffled_deck.remove(card_to_deal)
             counter += 1
-        
+
         # After dealing player hands,
         # add remaining cards to stockpile
         self.stockpile_list.extend(shuffled_deck)
@@ -301,7 +312,7 @@ press <ENTER>:\n")
             self.game_end()
         else:
             stockpile_list.remove(drawn_card)
-       
+
         self.check_for_books(active_player, book_check_trigger)
         self.switch_player(active_player)
 
@@ -357,9 +368,9 @@ press <ENTER>:\n")
                                      human_books, computer_books)
             elif requested_card in ("Exit", "E"):
                 self.input_validation(requested_card)
-                print("Thanks for playing!")
-                print("*** BYE! ***")
-                sleep(2)
+                print("\nThanks for playing!")
+                sleep(3)
+                self.good_bye()
                 quit()
             else:
                 self.input_validation(requested_card)
@@ -468,10 +479,10 @@ press <ENTER>:\n")
                            if book_check_trigger in card]
 
         if len(duplicate_ranks) == 4:
-            
+
             for card in duplicate_ranks:
                 player_hand.remove(card)
-            
+
             if active_player == "human":
                 self.human_books += 1
                 print("\n*** You have a book! ***\n")
@@ -480,7 +491,7 @@ press <ENTER>:\n")
                 self.computer_books += 1
                 print("\n*** The computer has a book! ***\n")
             sleep(1)
-        
+
         # End the game if all 13 books have been won
         if self.human_books + self.computer_books == 13:
             self.game_end()
@@ -496,7 +507,7 @@ press <ENTER>:\n")
             player_display = "YOU"
         elif active_player == "computer":
             player_display = "COMPUTER"
-        
+
         print("\n" * 10)
         print("┌──────────────────────────────────────────────────────────────\
 ────────────────┐")
@@ -573,7 +584,6 @@ again. ***")
         """
         print("*** THE GAME HAS ENDED ***")
         sleep(1)
-        self.clear_screen()
         self.anounce_winner()
         self.play_again()
 
@@ -582,7 +592,7 @@ again. ***")
         - Display final scores
         - Anounce the winner
         """
-      
+    
         # Display win/lose message
         if self.human_books > self.computer_books:
             message = ("\n*** Congratulations - You are the winner! ***\n")
@@ -599,7 +609,7 @@ again. ***")
 
         # Ask to play again
         play_again_input = input("\nDo you want to play again? Y/N ")
-      
+    
         # Yes, play again
         if play_again_input.upper() == "Y":
 
@@ -609,8 +619,7 @@ again. ***")
             self.play_again()
         else:
             # No - quit game
-            print("*** BYE! ***")
-            sleep(2)
+            self.good_bye()
             quit()
 
     def play_again(self):
@@ -622,7 +631,7 @@ again. ***")
 
         # Clear screen
         self.clear_screen()
-        
+       
         # Reset scores
         self.human_hand.clear()
         self.computer_hand.clear()
@@ -636,8 +645,8 @@ def main():
     - Runs the main program functions
     """
     game = GoFish()
+    game.welcome()
     game.new_game()
-    # game.welcome()
 
 
 main()
