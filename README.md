@@ -2,7 +2,7 @@
 
 ## Diploma in Full Stack Software Development - Portfolio Project 
 
-<!-- Mockup Image -->
+![](docs/images/readme/go-fish-mockup.webp)
 
 
 **[Click here to view the live project.](https://pp3-go-fish.herokuapp.com/)**
