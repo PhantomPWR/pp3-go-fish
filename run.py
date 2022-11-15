@@ -97,6 +97,8 @@ class GoFish:
     - The remaining cards are placed face down\
  on the table to form the stockpile
         """
+        print(rules_pt1)
+        self.continue_prompt()
 
         rules_pt2 = """
     Playing the Game
@@ -116,10 +118,8 @@ class GoFish:
 the stockpile
 
         """
-        print(rules_pt1, ("\n"))
-        sleep(10)
         print(rules_pt2)
-        print("-" * 80)
+        self.continue_prompt()
 
     def game_instructions(self):
 
@@ -143,9 +143,21 @@ or the first letter, e.g. Q or Queen
        - "N" or "No" to exit the game
         """
 
-        sleep(10)
         print(instructions)
         print("-" * 80)
+
+    def continue_prompt(self):
+        """
+        - Lets the user press <ENTER> to continue
+        - Once <ENTER> has been pressed, delete the prompt to avoid confusion
+        """
+
+        # Continue when the user presses <ENTER>
+        input("Press <ENTER> to continue...")
+
+        # Delete the "Press <ENTER>..." text
+        print("\033[A\033[A")
+        print("\033[A\033[A")
 
     def new_game(self):
         """
@@ -336,14 +348,14 @@ press <ENTER>:\n")
         if active_player == "human":
             human_input = input("\nWhich card would you like to ask for? ")
             requested_card = human_input.capitalize()
-            if requested_card == "Help" or requested_card == "H":
+            if requested_card in ("Help", "H"):
                 self.input_validation(requested_card)
                 self.game_rules()
                 self.game_instructions()
                 input("Press <enter> to continue...")
                 self.play_game_round(active_player, opponent,
                                      human_books, computer_books)
-            elif requested_card == "Exit" or requested_card == "E":
+            elif requested_card in ("Exit", "E"):
                 self.input_validation(requested_card)
                 print("Thanks for playing!")
                 print("*** BYE! ***")
